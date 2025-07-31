@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:33:58 by sikunne           #+#    #+#             */
-/*   Updated: 2025/07/31 18:19:35 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/07/31 19:04:15 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define BUREAUCRAT_HPP
 # include <iostream>
 
-#define DEF_GRADE 150
-#define DEF_NAME "John Bureaucrat"
+# define DEF_GRADE 150
+# define DEF_NAME "John Bureaucrat"
 
 class Bureaucrat
 {

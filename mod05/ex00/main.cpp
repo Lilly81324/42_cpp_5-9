@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:04:24 by sikunne           #+#    #+#             */
-/*   Updated: 2025/07/31 18:51:36 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/07/31 19:06:46 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,10 @@
 void	increment_tests(Bureaucrat& subject, int value)
 {
 	std::cout << "----------" << std::endl;
-	while (value != 0)
-	{
 		if (value > 0)
-		{
 			subject.decrement();
-			value--;
-		}
 		else
-		{
 			subject.increment();
-			value++;
-		}
-	}
 }
 
 int main(void)
@@ -41,15 +32,15 @@ int main(void)
 	Bureaucrat	low("Low Larry", 150);
 	Bureaucrat	average("Average Avery", 75);
 	Bureaucrat	cloned(average);
-	Bureaucrat	copied;
-	
-	copied = average;
-	
-	increment_tests(high, -2);
-	increment_tests(high, 2);
-	increment_tests(low, 2);
-	increment_tests(low, -2);
-	
+	std::cout << "----------" << std::endl;
+	defaulty = high;
+	std::cout << "----------" << std::endl;
+	high.increment();
+	high.decrement();
+	std::cout << "----------" << std::endl;
+	low.decrement();
+	low.increment();
+	std::cout << "----------" << std::endl;
 	average = defaulty = high;
 	return (0);
 }

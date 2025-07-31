@@ -19,7 +19,7 @@ $(NAME): $(OBJS)
 	$(CXX) $(CFLAGS) $(OBJS) -o $@
 	@echo "----<====>----\nSuccesfully compiled:" $@
 
-$(OBJ_DIR)%.o: %.cpp $(OBJ_DIR)
+$(OBJ_DIR)%.o: %.cpp | $(OBJ_DIR)
 	$(CXX) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):

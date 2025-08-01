@@ -1,4 +1,4 @@
-NAME = ex05
+NAME = ex00
 
 OBJ_DIR = ./obj/
 

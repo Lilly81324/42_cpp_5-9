@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:46:39 by sikunne           #+#    #+#             */
-/*   Updated: 2025/07/31 18:54:39 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/01 14:03:07 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,6 @@ const char *Bureaucrat::GradeTooLowException::what(void) const throw ()
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat& subject)
 {
-	out << subject.getName() << " has a grade of " << subject.getGrade() << std::endl;
+	out << subject.getName() << ", bureaucrat grade  " << subject.getGrade() << "." << std::endl;
 	return (out);
 }

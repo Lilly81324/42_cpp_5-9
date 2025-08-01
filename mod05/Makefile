@@ -10,7 +10,7 @@ RAW_OBJ = $(SRC:%.cpp=%.o)
 OBJS = $(addprefix $(OBJ_DIR), $(RAW_OBJ))
 
 CXX = c++
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 

@@ -6,41 +6,74 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 17:04:24 by sikunne           #+#    #+#             */
-/*   Updated: 2025/07/31 19:06:46 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/01 17:21:45 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 /**
- * Bigger then 0 values reduce the numeric value of the subjects grade
+ * Try to increment Bureaucrat
  */
-void	increment_tests(Bureaucrat& subject, int value)
+static void	static_inc(Bureaucrat& subject)
 {
 	std::cout << "----------" << std::endl;
-		if (value > 0)
-			subject.decrement();
-		else
-			subject.increment();
+	try
+	{
+		subject.increment();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << ex.what() << std::endl;
+	}
+}
+
+/**
+ * Try to decrement Bureaucrat
+ */
+static void	static_dec(Bureaucrat& subject)
+{
+	std::cout << "----------" << std::endl;
+	try
+	{
+		subject.decrement();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << ex.what() << std::endl;
+	}
 }
 
 int main(void)
 {
+	try
+	{
+		Bureaucrat	invalid("Invalid Ingrid", 0);
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << ex.what() << std::endl;
+	}
+	try
+	{
+		Bureaucrat	invalid("Invalid Ingrid", 151);
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << ex.what() << std::endl;
+	}
 	Bureaucrat	defaulty;
-	Bureaucrat	toolow("Invalid Ingrid", 0);
-	Bureaucrat	toohigh("Invalid Idriz", 151);
 	Bureaucrat	high("CEO Carly", 1);
 	Bureaucrat	low("Low Larry", 150);
 	Bureaucrat	average("Average Avery", 75);
 	Bureaucrat	cloned(average);
 	std::cout << "----------" << std::endl;
 	defaulty = high;
-	std::cout << "----------" << std::endl;
-	high.increment();
-	high.decrement();
-	std::cout << "----------" << std::endl;
-	low.decrement();
-	low.increment();
+	static_inc(high);
+	static_dec(high);
+	static_dec(low);
+	static_inc(low);
 	std::cout << "----------" << std::endl;
 	average = defaulty = high;
+	std::cout << "----------" << std::endl;
 	return (0);
 }

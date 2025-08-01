@@ -6,16 +6,19 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:33:58 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/01 17:05:24 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/01 17:07:28 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 # include <iostream>
+# include "Form.hpp"
 
-# define DEF_GRADE 150
-# define DEF_NAME "John Bureaucrat"
+class Form;
+
+# define BU_DEF_GRADE 150
+# define BU_DEF_NAME "John Bureaucrat"
 
 class Bureaucrat
 {
@@ -35,6 +38,7 @@ class Bureaucrat
 		void		setGrade(int grade);
 		void		increment(void);
 		void		decrement(void);
+		bool		signForm(Form& subject);
 		class GradeTooHighException: public std::exception
 		{
 			public:

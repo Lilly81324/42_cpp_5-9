@@ -6,40 +6,42 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:46:39 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/01 17:06:53 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/01 18:04:08 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 
+#include "Bureaucrat.hpp"
+
 // Default Constructor
-Bureaucrat::Bureaucrat(void): name(DEF_NAME), grade(DEF_GRADE)
+Bureaucrat::Bureaucrat(void): name(BU_DEF_NAME), grade(BU_DEF_GRADE)
 {
 	std::cout << "Default Bureaucrat Constructor called on " \
 	<< this->name << " grade " <<this->grade << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string name): name(name), grade(DEF_GRADE)
+Bureaucrat::Bureaucrat(const std::string name): name(name), grade(BU_DEF_GRADE)
 {
 	std::cout << "Parameterized Bureaucrat Constructor (name) called on " \
 	<< this->name << " grade " <<this->grade << std::endl;
 }
 
-Bureaucrat::Bureaucrat(int grade): name(DEF_NAME), grade(DEF_GRADE)
+Bureaucrat::Bureaucrat(int grade): name(BU_DEF_NAME), grade(BU_DEF_GRADE)
 {
 	this->setGrade(grade);
 	std::cout << "Parameterized Bureaucrat Constructor (grade) called";
 	std::cout << " on " << this->name << " grade " <<this->grade << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string name, int grade): name(name), grade(DEF_GRADE)
+Bureaucrat::Bureaucrat(const std::string name, int grade): name(name), grade(BU_DEF_GRADE)
 {
 	this->setGrade(grade);
 	std::cout << "Parameterized Bureaucrat Constructor (name, grade) called on " \
 	<< this->name << " grade " <<this->grade << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other): name(other.name), grade(DEF_GRADE)
+Bureaucrat::Bureaucrat(const Bureaucrat& other): name(other.name), grade(BU_DEF_GRADE)
 {
 	this->setGrade(other.grade);
 	std::cout << "Copy Bureaucrat Constructor called on " \
@@ -95,6 +97,26 @@ void	Bureaucrat::decrement(void)
 {
 	this->setGrade(this->getGrade() + 1);
 	std::cout << "Decremented " << this->getName() << " to " << this->getGrade() << std::endl;
+}
+
+bool	Bureaucrat::signForm(Form& subject)
+{
+	if (subject.getSign())
+	{
+		std::cout << this->getName() << " couldn't sign " << subject.getName() \
+		<< " because it is already signed." << std::endl;
+		return (false);
+	}
+	if (subject.beSigned(*this))
+	{
+		std::cout << this->getName() << " signed " << subject.getName() \
+		<< " (Grades " << subject.getSiGrade() << " >= " << this->getGrade() << ")." << std::endl;
+		return (true);
+	}
+	std::cout << this->getName() << " couldn't sign " << subject.getName() \
+	<< " because Grade is too low (Grades " << this->getGrade() << " > " \
+	<< subject.getSiGrade() << ")." << std::endl;;
+	return (false);
 }
 
 const char *Bureaucrat::GradeTooHighException::what(void) const throw ()

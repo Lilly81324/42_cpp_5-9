@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:46:39 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/01 19:04:23 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/01 19:01:06 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	Bureaucrat::decrement(void)
 	std::cout << "Decremented " << this->getName() << " to " << this->getGrade() << std::endl;
 }
 
-bool	Bureaucrat::signForm(Form& subject)
+bool	Bureaucrat::signForm(AForm& subject)
 {
 	if (subject.getSign())
 	{

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
+/*   PresidentialPardonForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,34 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
-std::ostream &operator<<(std::ostream &out, const RobotomyRequestForm& subject);
+std::ostream &operator<<(std::ostream &out, const PresidentialPardonForm& subject);
 
-RobotomyRequestForm::RobotomyRequestForm(void): \
-AForm("Robotomy Request Form", 72, 45), target(DEF_TARGET)
+PresidentialPardonForm::PresidentialPardonForm(void): \
+AForm("Presidential Pardon Form", 25, 5), target(DEF_TARGET)
 {
-	std::cout << "Default RobotomyRequestForm Constructor called:      ";
+	std::cout << "Default PresidentialPardonForm Constructor called:      ";
 	std::cout << *this << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string target): \
-AForm("Robotomy Request Form", 72, 45), target(target)
+PresidentialPardonForm::PresidentialPardonForm(const std::string target): \
+AForm("Presidential Pardon Form", 25, 5), target(target)
 {
-	std::cout << "Parameterized RobotomyRequestForm Constructor called: ";
+	std::cout << "Parameterized PresidentialPardonForm Constructor called: ";
 	std::cout << *this << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other): \
-AForm("Robotomy Request Form", 72, 45), target(other.getTarget())
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& other): \
+AForm("Presidential Pardon Form", 25, 5), target(other.getTarget())
 {
-	std::cout << "Copy RobotomyRequestForm Constructor called:          ";
+	std::cout << "Copy PresidentialPardonForm Constructor called:          ";
 	std::cout << *this << std::endl;
 }
 
-RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
+PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPardonForm& other)
 {
-	std::cout << "RobotomyRequestForm Asignement operator called: ";
+	std::cout << "PresidentialPardonForm Asignement operator called: ";
 	std::cout << "Setting Sign: " << \
 	this->getSign() << "->" << \
 	other.getSign() << ", Target: " << \
@@ -50,18 +50,18 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
 	return (*this);
 }
 
-RobotomyRequestForm::~RobotomyRequestForm()
+PresidentialPardonForm::~PresidentialPardonForm()
 {
-	std::cout << "RobotomyRequestForm Destructor called on: ";
+	std::cout << "PresidentialPardonForm Destructor called on: ";
 	std::cout << *this << std::endl;
 }
 
-std::string	RobotomyRequestForm::getTarget(void) const
+std::string	PresidentialPardonForm::getTarget(void) const
 {
 	return (this->target);
 }
 
-bool	RobotomyRequestForm::execute(Bureaucrat const &executor) const
+bool	PresidentialPardonForm::execute(Bureaucrat const &executor) const
 {
 	if (!this->getSign())
 	{
@@ -80,17 +80,11 @@ bool	RobotomyRequestForm::execute(Bureaucrat const &executor) const
 		<< ")" << std::endl;
 		return false;
 	}
-	srand(time(0));
-	if (rand() % 2)
-		std::cout << "Failed Robotomization of " << \
-		this->getTarget()  << "." << std::endl;
-	else
-		std::cout << "Robotomized " << \
-		this->getTarget() << " succesfully." << std::endl;
+	std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox." << std::endl;
 	return true;
 }
 
-std::ostream &operator<<(std::ostream &out, const RobotomyRequestForm& subject)
+std::ostream &operator<<(std::ostream &out, const PresidentialPardonForm& subject)
 {
 	out << \
 	subject.getName() << \

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.hpp                            :+:      :+:    :+:   */
+/*   ShrubberyCreationForm.hpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ROBOTOMYREQUESTFORM_HPP
-# define ROBOTOMYREQUESTFORM_HPP
+#ifndef SHURBBERYCREATIONFORM_HPP
+# define SHURBBERYCREATIONFORM_HPP
 # include <iostream>
 # include <cstdlib>
 # include <ctime>
@@ -20,20 +20,20 @@
 class Bureaucrat;
 class AForm;
 
-class RobotomyRequestForm: public AForm
+class ShrubberyCreationForm: public AForm
 {
 	private:
 		std::string	target;
 	public:
-		RobotomyRequestForm();
-		RobotomyRequestForm(std::string target);
-		RobotomyRequestForm(const RobotomyRequestForm& other);
-		RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
-		virtual ~RobotomyRequestForm();
+		ShrubberyCreationForm();
+		ShrubberyCreationForm(std::string target);
+		ShrubberyCreationForm(const ShrubberyCreationForm& other);
+		ShrubberyCreationForm& operator=(const ShrubberyCreationForm& other);
+		virtual ~ShrubberyCreationForm();
 		std::string	getTarget(void) const;
 		virtual bool	execute(Bureaucrat const &executor) const;
 };
 
-std::ostream &operator<<(std::ostream &out, const RobotomyRequestForm& subject);
+std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm& subject);
 
 #endif

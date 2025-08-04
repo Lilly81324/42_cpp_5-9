@@ -6,7 +6,9 @@ RAW_SRC = \
 main \
 Bureaucrat \
 AForm \
-RobotomyRequestForm
+RobotomyRequestForm \
+PresidentialPardonForm \
+ShrubberyCreationForm
 
 SRC = $(addsuffix .cpp, $(RAW_SRC))
 RAW_OBJ = $(SRC:%.cpp=%.o)

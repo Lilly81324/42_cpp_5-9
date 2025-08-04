@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:33:58 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/01 19:00:53 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/04 17:54:08 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class Bureaucrat
 		void		increment(void);
 		void		decrement(void);
 		bool		signForm(AForm& subject);
+		void		executeForm(AForm const & form) const;
 		class GradeTooHighException: public std::exception
 		{
 			public:

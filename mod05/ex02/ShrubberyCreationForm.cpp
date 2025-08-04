@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RobotomyRequestForm.cpp                            :+:      :+:    :+:   */
+/*   ShrubberyCreationForm.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,34 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
-std::ostream &operator<<(std::ostream &out, const RobotomyRequestForm& subject);
+std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm& subject);
 
-RobotomyRequestForm::RobotomyRequestForm(void): \
-AForm("Robotomy Request Form", 72, 45), target(DEF_TARGET)
+ShrubberyCreationForm::ShrubberyCreationForm(void): \
+AForm("Shrubbery Creation Form", 145, 137), target(DEF_TARGET)
 {
-	std::cout << "Default RobotomyRequestForm Constructor called:      ";
+	std::cout << "Default ShrubberyCreationForm Constructor called:      ";
 	std::cout << *this << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string target): \
-AForm("Robotomy Request Form", 72, 45), target(target)
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string target): \
+AForm("Shrubbery Creation Form", 145, 137), target(target)
 {
-	std::cout << "Parameterized RobotomyRequestForm Constructor called: ";
+	std::cout << "Parameterized ShrubberyCreationForm Constructor called: ";
 	std::cout << *this << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other): \
-AForm("Robotomy Request Form", 72, 45), target(other.getTarget())
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other): \
+AForm("Shrubbery Creation Form", 145, 137), target(other.getTarget())
 {
-	std::cout << "Copy RobotomyRequestForm Constructor called:          ";
+	std::cout << "Copy ShrubberyCreationForm Constructor called:          ";
 	std::cout << *this << std::endl;
 }
 
-RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
+ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other)
 {
-	std::cout << "RobotomyRequestForm Asignement operator called: ";
+	std::cout << "ShrubberyCreationForm Asignement operator called: ";
 	std::cout << "Setting Sign: " << \
 	this->getSign() << "->" << \
 	other.getSign() << ", Target: " << \
@@ -50,18 +50,18 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
 	return (*this);
 }
 
-RobotomyRequestForm::~RobotomyRequestForm()
+ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-	std::cout << "RobotomyRequestForm Destructor called on: ";
+	std::cout << "ShrubberyCreationForm Destructor called on: ";
 	std::cout << *this << std::endl;
 }
 
-std::string	RobotomyRequestForm::getTarget(void) const
+std::string	ShrubberyCreationForm::getTarget(void) const
 {
 	return (this->target);
 }
 
-bool	RobotomyRequestForm::execute(Bureaucrat const &executor) const
+bool	ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
 	if (!this->getSign())
 	{
@@ -80,17 +80,11 @@ bool	RobotomyRequestForm::execute(Bureaucrat const &executor) const
 		<< ")" << std::endl;
 		return false;
 	}
-	srand(time(0));
-	if (rand() % 2)
-		std::cout << "Failed Robotomization of " << \
-		this->getTarget()  << "." << std::endl;
-	else
-		std::cout << "Robotomized " << \
-		this->getTarget() << " succesfully." << std::endl;
+	std::cout << "I am a shrub, not a bush!" << std::endl;
 	return true;
 }
 
-std::ostream &operator<<(std::ostream &out, const RobotomyRequestForm& subject)
+std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm& subject)
 {
 	out << \
 	subject.getName() << \

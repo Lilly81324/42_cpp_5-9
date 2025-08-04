@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:46:39 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/01 19:01:06 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/04 17:59:38 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,21 @@ bool	Bureaucrat::signForm(AForm& subject)
 	<< " because Grade is too low (Grades " << this->getGrade() << " > " \
 	<< subject.getSiGrade() << ")." << std::endl;;
 	return (false);
+}
+
+void Bureaucrat::executeForm(AForm const & form) const
+{
+	if (!form.execute(*this))
+	{
+		std::cout << "Error: " << \
+		this->getName() << " failed executing " << \
+		form.getName() << std::endl;
+		return ;
+	}
+	std::cout << \
+	this->getName() << " executed " << \
+	form.getName() << std::endl;
+	return ;
 }
 
 const char *Bureaucrat::GradeTooHighException::what(void) const throw ()

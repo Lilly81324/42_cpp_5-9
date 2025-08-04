@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:33:58 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/01 19:02:27 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/04 17:55:53 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ class AForm
 		int			getExGrade(void) const;
 		bool		getSign(void) const;
 		bool		beSigned(const Bureaucrat& signer);
-		virtual void	execute(Bureaucrat const &executor) const = 0;
+		virtual bool	execute(Bureaucrat const &executor) const = 0;
 		class GradeTooHighException: public std::exception
 		{
 			public:

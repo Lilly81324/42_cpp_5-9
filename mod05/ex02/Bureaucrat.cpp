@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:46:39 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/04 17:59:38 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/05 14:18:30 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,34 @@
 // Default Constructor
 Bureaucrat::Bureaucrat(void): name(BU_DEF_NAME), grade(BU_DEF_GRADE)
 {
-	std::cout << "Default Bureaucrat Constructor called on " \
+	std::cout << "Bureaucrat D-Constr.:             " \
 	<< this->name << " grade " <<this->grade << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const std::string name): name(name), grade(BU_DEF_GRADE)
 {
-	std::cout << "Parameterized Bureaucrat Constructor (name) called on " \
+	std::cout << "Bureaucrat P-Constr.(name):       " \
 	<< this->name << " grade " <<this->grade << std::endl;
 }
 
 Bureaucrat::Bureaucrat(int grade): name(BU_DEF_NAME), grade(BU_DEF_GRADE)
 {
 	this->setGrade(grade);
-	std::cout << "Parameterized Bureaucrat Constructor (grade) called";
+	std::cout << "Bureaucrat P-Constr.(grade):      ";
 	std::cout << " on " << this->name << " grade " <<this->grade << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const std::string name, int grade): name(name), grade(BU_DEF_GRADE)
 {
 	this->setGrade(grade);
-	std::cout << "Parameterized Bureaucrat Constructor (name, grade) called on " \
+	std::cout << "Bureaucrat P-Constr.(name, grade):" \
 	<< this->name << " grade " <<this->grade << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other): name(other.name), grade(BU_DEF_GRADE)
 {
 	this->setGrade(other.grade);
-	std::cout << "Copy Bureaucrat Constructor called on " \
+	std::cout << "Bureaucrat C-Constr.:             " \
 	<< this->name << " grade " <<this->grade << std::endl;
 }
 
@@ -101,24 +101,51 @@ bool	Bureaucrat::signForm(AForm& subject)
 {
 	if (subject.getSign())
 	{
-		std::cout << this->getName() << " couldn't sign " << subject.getName() \
-		<< " because it is already signed." << std::endl;
+		std::cout << "Error: " << \
+		this->getName() << " couldn't sign " << \
+		subject.getName() << " because it is already signed." << std::endl;
 		return (false);
 	}
-	if (subject.beSigned(*this))
+	try
 	{
-		std::cout << this->getName() << " signed " << subject.getName() \
-		<< " (Grades " << subject.getSiGrade() << " >= " << this->getGrade() << ")." << std::endl;
-		return (true);
+		subject.beSigned(*this);
 	}
-	std::cout << this->getName() << " couldn't sign " << subject.getName() \
-	<< " because Grade is too low (Grades " << this->getGrade() << " > " \
-	<< subject.getSiGrade() << ")." << std::endl;;
-	return (false);
+	catch (const AForm::GradeTooLowException& e)
+	{
+		std::cout << "Error: " << \
+		this->getName() << " couldn't sign " << \
+		subject.getName() << " because Grade is too low (Grades " << \
+		this->getGrade() << " > " << \
+		subject.getSiGrade() << ")." << std::endl;;
+		return (false);
+	}
+	std::cout << \
+	this->getName() << " signed " << \
+	subject.getName() << " (Grades " << \
+	subject.getSiGrade() << " >= " << \
+	this->getGrade() << ")." << std::endl;
+	return (true);
 }
 
 void Bureaucrat::executeForm(AForm const & form) const
 {
+	if (!form.getSign())
+	{
+		std::cerr << "Error: " << \
+		form.getName() << " of " << \
+		form.getTarget() << " is not signed, and cant be executed." << \
+		std::endl;
+		return ;
+	}
+	if (this->getGrade() > form.getExGrade())
+	{
+		std::cerr << "Error: " << this->getName() << \
+		"s grade is too low to execute " << form.getName() << \
+		". (" << this->getGrade() << \
+		" > " << form.getExGrade()\
+		<< ")" << std::endl;
+		return ;
+	}
 	if (!form.execute(*this))
 	{
 		std::cout << "Error: " << \
@@ -126,9 +153,6 @@ void Bureaucrat::executeForm(AForm const & form) const
 		form.getName() << std::endl;
 		return ;
 	}
-	std::cout << \
-	this->getName() << " executed " << \
-	form.getName() << std::endl;
 	return ;
 }
 

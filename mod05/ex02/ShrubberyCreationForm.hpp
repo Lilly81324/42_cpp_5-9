@@ -13,8 +13,7 @@
 #ifndef SHURBBERYCREATIONFORM_HPP
 # define SHURBBERYCREATIONFORM_HPP
 # include <iostream>
-# include <cstdlib>
-# include <ctime>
+# include <fstream>
 # include "AForm.hpp"
 
 class Bureaucrat;
@@ -24,6 +23,8 @@ class ShrubberyCreationForm: public AForm
 {
 	private:
 		std::string	target;
+		void	draw_line(std::ofstream& out, int count, const std::string &src) const;
+		bool	draw_tree(void) const;
 	public:
 		ShrubberyCreationForm();
 		ShrubberyCreationForm(std::string target);

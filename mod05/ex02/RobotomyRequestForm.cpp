@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 14:16:55 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/04 18:05:25 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/05 14:18:57 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@ std::ostream &operator<<(std::ostream &out, const RobotomyRequestForm& subject);
 RobotomyRequestForm::RobotomyRequestForm(void): \
 AForm("Robotomy Request Form", 72, 45), target(DEF_TARGET)
 {
-	std::cout << "Default RobotomyRequestForm Constructor called:      ";
+	std::cout << "RobotomyRequestForm D-Constr.:    ";
 	std::cout << *this << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const std::string target): \
 AForm("Robotomy Request Form", 72, 45), target(target)
 {
-	std::cout << "Parameterized RobotomyRequestForm Constructor called: ";
+	std::cout << "RobotomyRequestForm P-Constr.:    ";
 	std::cout << *this << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other): \
 AForm("Robotomy Request Form", 72, 45), target(other.getTarget())
 {
-	std::cout << "Copy RobotomyRequestForm Constructor called:          ";
+	std::cout << "RobotomyRequestForm C-Constr.:    ";
 	std::cout << *this << std::endl;
 }
 
@@ -52,7 +52,7 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
 
 RobotomyRequestForm::~RobotomyRequestForm()
 {
-	std::cout << "RobotomyRequestForm Destructor called on: ";
+	std::cout << "RobotomyRequestForm Destructor:   ";
 	std::cout << *this << std::endl;
 }
 
@@ -64,22 +64,9 @@ std::string	RobotomyRequestForm::getTarget(void) const
 bool	RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
 	if (!this->getSign())
-	{
-		std::cerr << "Error: " << \
-		this->getName() << " of " << \
-		this->getTarget() << " is not signed, and cant be executed." << \
-		std::endl;
 		return false;
-	}
 	if (executor.getGrade() > this->getExGrade())
-	{
-		std::cerr << "Error: " << executor.getName() << \
-		"s grade is too low to execute " << this->getName() << \
-		". (" << executor.getGrade() << \
-		" > " << this->getExGrade()\
-		<< ")" << std::endl;
 		return false;
-	}
 	srand(time(0));
 	if (rand() % 2)
 		std::cout << "Failed Robotomization of " << \

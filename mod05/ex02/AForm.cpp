@@ -15,7 +15,7 @@
 AForm::AForm(void): \
 name(FO_DEF_NAME), is_signed(FO_DEF_SIGN), sign_grade(FO_DEF_SIGN_GRADE), exec_grade(FO_DEF_EX_GRADE)
 {
-	std::cout << "Default AForm Constructor called:       ";
+	std::cout << "AForm D-Constr.:                  ";
 	std::cout << *this << std::endl;
 }
 
@@ -30,7 +30,7 @@ name(name), is_signed(FO_DEF_SIGN), sign_grade(sign_g), exec_grade(exec_g)
 		throw (AForm::GradeTooHighException());
 	else if (exec_g > 150)
 		throw (AForm::GradeTooLowException());
-	std::cout << "Parameterized AForm Constructor called: ";
+	std::cout << "AForm P-Constr.:                  ";
 	std::cout << *this << std::endl;
 }
 
@@ -38,7 +38,7 @@ AForm::AForm(const AForm& other): \
 name(other.getName()), is_signed(other.getSign()), \
 sign_grade(other.getSiGrade()), exec_grade(other.getExGrade())
 {
-	std::cout << "Copy AForm Constructor created:        ";
+	std::cout << "AForm C-Constr.:                  ";
 	std::cout << *this << std::endl;
 }
 
@@ -54,7 +54,7 @@ AForm& AForm::operator=(const AForm& other)
 
 AForm::~AForm()
 {
-	std::cout << "AForm Destructor called on: ";
+	std::cout << "AForm Destructor:                 ";
 	std::cout << *this << std::endl;
 }
 

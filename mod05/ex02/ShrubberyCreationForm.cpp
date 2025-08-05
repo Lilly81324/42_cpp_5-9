@@ -17,21 +17,21 @@ std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm& subject
 ShrubberyCreationForm::ShrubberyCreationForm(void): \
 AForm("Shrubbery Creation Form", 145, 137), target(DEF_TARGET)
 {
-	std::cout << "Default ShrubberyCreationForm Constructor called:      ";
+	std::cout << "ShrubberyCreationForm D-Constr.:  ";
 	std::cout << *this << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string target): \
 AForm("Shrubbery Creation Form", 145, 137), target(target)
 {
-	std::cout << "Parameterized ShrubberyCreationForm Constructor called: ";
+	std::cout << "ShrubberyCreationForm P-Constr.:  ";
 	std::cout << *this << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other): \
 AForm("Shrubbery Creation Form", 145, 137), target(other.getTarget())
 {
-	std::cout << "Copy ShrubberyCreationForm Constructor called:          ";
+	std::cout << "ShrubberyCreationForm C-Constr.:  ";
 	std::cout << *this << std::endl;
 }
 
@@ -52,7 +52,7 @@ ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationF
 
 ShrubberyCreationForm::~ShrubberyCreationForm()
 {
-	std::cout << "ShrubberyCreationForm Destructor called on: ";
+	std::cout << "ShrubberyCreationForm Destructor: ";
 	std::cout << *this << std::endl;
 }
 
@@ -61,27 +61,49 @@ std::string	ShrubberyCreationForm::getTarget(void) const
 	return (this->target);
 }
 
+void ShrubberyCreationForm::draw_line( std::ofstream& out, int count, const std::string &src) const
+{
+	for (int i = 0; i < count; i++)
+		out << src;
+	out << std::endl;
+}
+
+bool	ShrubberyCreationForm::draw_tree(void) const
+{
+	std::string name;
+
+	name = this->getTarget() + "_shrubbery";
+	std::ofstream out(name.c_str());
+	if (!out.is_open())
+	{
+		std::cerr << "Error: Couldnt open file" << std::endl;
+		return (false);
+	}
+	draw_line(out, 4, "         ooooooo    ");
+	draw_line(out, 4, "        ooOOOO0oo   ");
+	draw_line(out, 4, "       ooO0OOO0Ooo  ");
+	draw_line(out, 4, "       ooOOO0OOOoo  ");
+	draw_line(out, 4, "   _    ooOOO0Ooo   ");
+	draw_line(out, 4, "  / \\    oo|o|oo    ");
+	draw_line(out, 4, "  | |   >-=| |      ");
+	draw_line(out, 4, "  \\_/      | |=-<   ");
+	draw_line(out, 4, "   |-      | |      ");
+	draw_line(out, 4, "  -|       | |      ");
+	draw_line(out, 4, "   |      /   \\     ");
+	return (true);
+}
+
 bool	ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
 	if (!this->getSign())
-	{
-		std::cerr << "Error: " << \
-		this->getName() << " of " << \
-		this->getTarget() << " is not signed, and cant be executed." << \
-		std::endl;
 		return false;
-	}
 	if (executor.getGrade() > this->getExGrade())
-	{
-		std::cerr << "Error: " << executor.getName() << \
-		"s grade is too low to execute " << this->getName() << \
-		". (" << executor.getGrade() << \
-		" > " << this->getExGrade()\
-		<< ")" << std::endl;
 		return false;
-	}
-	std::cout << "I am a shrub, not a bush!" << std::endl;
-	return true;
+	std::cout << \
+	executor.getName() << " has executed the " <<\
+	this->getName() << " for " <<\
+	this->getTarget() << "." << std::endl;
+	return (this->draw_tree());
 }
 
 std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm& subject)

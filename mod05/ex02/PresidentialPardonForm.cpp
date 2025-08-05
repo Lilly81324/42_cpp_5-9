@@ -17,21 +17,21 @@ std::ostream &operator<<(std::ostream &out, const PresidentialPardonForm& subjec
 PresidentialPardonForm::PresidentialPardonForm(void): \
 AForm("Presidential Pardon Form", 25, 5), target(DEF_TARGET)
 {
-	std::cout << "Default PresidentialPardonForm Constructor called:      ";
+	std::cout << "PresidentialPardonForm D-Constr:  ";
 	std::cout << *this << std::endl;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(const std::string target): \
 AForm("Presidential Pardon Form", 25, 5), target(target)
 {
-	std::cout << "Parameterized PresidentialPardonForm Constructor called: ";
+	std::cout << "PresidentialPardonForm P-Constr.: ";
 	std::cout << *this << std::endl;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& other): \
 AForm("Presidential Pardon Form", 25, 5), target(other.getTarget())
 {
-	std::cout << "Copy PresidentialPardonForm Constructor called:          ";
+	std::cout << "PresidentialPardonForm C-Constr.: ";
 	std::cout << *this << std::endl;
 }
 
@@ -52,7 +52,7 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
 
 PresidentialPardonForm::~PresidentialPardonForm()
 {
-	std::cout << "PresidentialPardonForm Destructor called on: ";
+	std::cout << "PresidentialPardonForm Destructor:";
 	std::cout << *this << std::endl;
 }
 
@@ -64,22 +64,9 @@ std::string	PresidentialPardonForm::getTarget(void) const
 bool	PresidentialPardonForm::execute(Bureaucrat const &executor) const
 {
 	if (!this->getSign())
-	{
-		std::cerr << "Error: " << \
-		this->getName() << " of " << \
-		this->getTarget() << " is not signed, and cant be executed." << \
-		std::endl;
 		return false;
-	}
 	if (executor.getGrade() > this->getExGrade())
-	{
-		std::cerr << "Error: " << executor.getName() << \
-		"s grade is too low to execute " << this->getName() << \
-		". (" << executor.getGrade() << \
-		" > " << this->getExGrade()\
-		<< ")" << std::endl;
 		return false;
-	}
 	std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox." << std::endl;
 	return true;
 }

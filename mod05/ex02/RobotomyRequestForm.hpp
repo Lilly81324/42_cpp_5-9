@@ -6,13 +6,12 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 16:33:58 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/04 18:17:32 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/05 14:46:04 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ROBOTOMYREQUESTFORM_HPP
 # define ROBOTOMYREQUESTFORM_HPP
-# include <iostream>
 # include <cstdlib>
 # include <ctime>
 # include "AForm.hpp"

@@ -6,11 +6,14 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:25:42 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/13 18:00:02 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/13 18:48:17 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+#include <iomanip>
+#include <iostream>
+#include <limits>
 
 void	printChar(const std::string &input)
 {
@@ -47,21 +50,22 @@ void printInt(const std::string &input)
 
 void printFloat(const std::string &input)
 {
-	float	fvalue;
+	float	fvalue = 0.0;
 	double	dvalue;
 	std::string error;
 	
-	error = FloatMath::atof(input, fvalue, dvalue);
+	error = FloatMath::atof(input, fvalue);
 	std::cout << "float: ";
 	if (error != "")
 		std::cout << error << std::endl;
 	else
-		std::cout << fvalue << std::endl;
+		std::cout << std::fixed << std::setprecision(1) << fvalue << "f" << std::endl;
+	error = FloatMath::atod(input, dvalue);
 	std::cout << "double: ";
 	if (error != "")
 		std::cout << error << std::endl;
 	else
-		std::cout << dvalue << std::endl;
+		std::cout << std::fixed << std::setprecision(1) << dvalue << std::endl;
 }
 
 void	ScalarConverter::convert(const std::string &input)

@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 17:44:46 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/13 17:48:06 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/13 18:41:12 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ std::string IntMath::atoi(const std::string &inp, int &output)
 			return (CONVERSION_IMPOSSIBLE);
 		while (isdigit(inp[i]))
 			i++;
-		if (!(inp[i] == 'f' || inp[i] == 'F'))
-			return (CONVERSION_IMPOSSIBLE);
-		i++;
+		if (inp[i] == 'f' || inp[i] == 'F')
+			i++;
 	}
 	if (inp[i])
 		return (CONVERSION_IMPOSSIBLE);

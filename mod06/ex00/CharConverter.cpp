@@ -1,35 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   IntMath.cpp                                        :+:      :+:    :+:   */
+/*   CharConverter.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/13 17:44:46 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 17:18:44 by sikunne          ###   ########.fr       */
+/*   Created: 2025/08/14 16:48:18 by sikunne           #+#    #+#             */
+/*   Updated: 2025/08/14 17:15:55 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "IntMath.hpp"
+#include "CharConverter.hpp"
 
-bool	IntMath::isdigit(char num)
+CharConverter::CharConverter(void): _in(""), _cval(0), _cerr("")
 {
-	if (num >= '0' && num <= '9')
-		return (true);
-	return (false);
 }
 
-std::string	IntMath::asCharLiteral(const std::string &inp, int &out)
+CharConverter::CharConverter(const std::string &input): _in(""), _cval(0), _cerr("")
 {
-	if (inp[0] != '\'')
+	_in = input;
+}
+
+CharConverter::CharConverter(const CharConverter &other)
+{
+	*this = other;
+}
+
+CharConverter &CharConverter::operator=(const CharConverter &other)
+{
+	if (this == &other)
+		return ;
+	this->_in = other._in;
+	this->_cval = other._cval;
+	this->_cerr = other._cerr;
+	return (*this);
+}
+
+CharConverter::~CharConverter(void)
+{	
+}
+
+void	CharConverter::setInput(const std::string &newIn)
+{
+	this->_in = newIn;
+}
+
+std::string	CharConverter::asCharLiteral(void)
+{
+	if (this->_in[0] != '\'')
 		return (CONVERSION_IMPOSSIBLE);
-	if (inp[1] == '\0')
+	if (this->_in[1] == '\0')
 		return (CONVERSION_IMPOSSIBLE);
-	if (inp[2] != '\'')
+	if (this->_in[2] != '\'')
 		return (CONVERSION_IMPOSSIBLE);
-	if (inp[3] != '\0')
+	if (this->_in[3] != '\0')
 		return (CONVERSION_IMPOSSIBLE);
-	out = inp[1];
+	this->_cval = (char)this->_in[1];
 	return ("");
 }
 
@@ -72,4 +98,32 @@ std::string IntMath::atoi(const std::string &inp, int &output)
 		return (CONVERSION_IMPOSSIBLE);
 	output = (int)(fac * stored);
 	return ("");
+}
+
+void	CharConverter::convChar(void)
+{
+	this->_cval = 0;
+	int			intvalue;
+	std::string	error;
+
+	this->_cerr = asCharLiteral(void);
+	if (this->_cerr != "")
+		this->_cerr = IntMath::atoi(input, intvalue);
+	std::cout << "char: ";
+	if (error != "")
+	{
+		std::cout << error << std::endl;
+		return ;
+	}
+	if (intvalue < ' ' || intvalue > '~')
+	{
+		std::cout << CHAR_NON_DISP << std::endl;
+		return ;
+	}
+	std::cout << "'" << (char)intvalue << "'"  << std::endl;
+}
+
+void	CharConverter::convert(void)
+{
+	
 }

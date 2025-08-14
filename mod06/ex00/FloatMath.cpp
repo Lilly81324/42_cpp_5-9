@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 17:50:31 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/13 19:03:18 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 16:31:57 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ bool	isNan(const std::string &inp, int i)
 		return (false);
 	if (inp[i + 2] != 'n')
 		return (false);
-	if (inp[i + 3])
-		return (false);
-	return (true);
+	if (inp[i + 3] == '\0')
+		return (true);
+	else if (inp[i + 3] == 'f' && inp[i + 4] == '\0')
+		return (true);
+	return (false);
 }
 
 /**
@@ -40,9 +42,11 @@ bool	isInf(const std::string &inp, int i)
 		return (false);
 	if (inp[i + 2] != 'f')
 		return (false);
-	if (inp[i + 3])
-		return (false);
-	return (true);
+	if (inp[i + 3] == '\0')
+		return (true);
+	else if (inp[i + 3] == 'f' && inp[i + 4] == '\0')
+		return (true);
+	return (false);
 }
 
 /**
@@ -99,9 +103,9 @@ std::string FloatMath::atof(const std::string &inp, float &outf)
 		i++;
 	}
 	if (isInf(inp, i) && fac == 1)
-		return ("inf");
+		return ("inff");
 	if (isInf(inp, i) && fac == -1)
-		return ("-inf");
+		return ("-inff");
 	// Start of float
 	if (!IntMath::isdigit(inp[i]))
 		return (CONVERSION_IMPOSSIBLE);

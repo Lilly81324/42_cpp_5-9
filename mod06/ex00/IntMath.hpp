@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 17:43:29 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/13 18:01:25 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 16:24:56 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ class IntMath
 		 * @returns false otherwise
 		 */
 		static bool	isdigit(char number);
-
 		/**
 		 * Convert String to Integer
 		 * @param inp: Input string to convert
@@ -41,6 +40,15 @@ class IntMath
 		 * Any misconfiguration results in CONVERSION_IMPOSSIBLE
 		 */
 		static std::string atoi(const std::string &inp, int &output);
+		/**
+		 * Convert String to char literal
+		 * @param inp: Input string to convert
+		 * @param output: Character to give out
+		 * @returns Error message if failure, or "" if nominal
+		 * [REQ:'] [REQ:character] [REQ:'] [REQ:\0]
+		 * Any misconfiguration results in CONVERSION_IMPOSSIBLE
+		 */
+		static std::string	asCharLiteral(const std::string &inp, int &out);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:21:25 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/13 17:58:27 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 16:43:23 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 
 class ScalarConverter
 {
+	private:
+		int		_ival;
+		char	_cval;
+		float	_fval;
+		double	_dval;
 	public:
 		static void convert(const std::string &input);
 };

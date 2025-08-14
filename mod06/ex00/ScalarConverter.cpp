@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:25:42 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/13 18:48:17 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 16:24:47 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	printChar(const std::string &input)
 	int			intvalue;
 	std::string	error;
 
-	error = IntMath::atoi(input, intvalue);
+	error = IntMath::asCharLiteral(input, intvalue);
+	if (error != "")
+		error = IntMath::atoi(input, intvalue);
 	std::cout << "char: ";
 	if (error != "")
 	{

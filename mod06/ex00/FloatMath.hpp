@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 17:50:48 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/13 18:36:09 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:22:13 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 
 class FloatMath
 {
+	private:
+		FloatMath(void);
+		FloatMath(const FloatMath &other);
+		FloatMath &operator=(const FloatMath &other);
+		~FloatMath(void);
 	public:
 		static std::string atof(const std::string &inp, float &outf);
 		static std::string atod(const std::string &inp, double &outd);

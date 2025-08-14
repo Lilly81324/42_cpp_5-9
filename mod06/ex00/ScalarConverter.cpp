@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:25:42 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 16:24:47 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:27:35 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
+
+ScalarConverter::ScalarConverter(void)
+{
+}
+
+ScalarConverter::ScalarConverter(const ScalarConverter &other)
+{
+	(void)other;
+}
+
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
+{
+	(void)other;
+	return (*this);
+}
+
+ScalarConverter::~ScalarConverter(void)
+{
+}
 
 void	printChar(const std::string &input)
 {

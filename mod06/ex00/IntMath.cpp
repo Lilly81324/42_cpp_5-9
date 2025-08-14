@@ -6,11 +6,30 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 17:44:46 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 17:18:44 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:24:55 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IntMath.hpp"
+
+IntMath::IntMath(void)
+{
+}
+
+IntMath::IntMath(const IntMath &other)
+{
+	(void)other;
+}
+
+IntMath &IntMath::operator=(const IntMath &other)
+{
+	(void)other;
+	return (*this);
+}
+
+IntMath::~IntMath(void)
+{
+}
 
 bool	IntMath::isdigit(char num)
 {

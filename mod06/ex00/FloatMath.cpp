@@ -6,12 +6,30 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 17:50:31 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 16:31:57 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:23:34 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FloatMath.hpp"
-#include <iostream>
+
+FloatMath::FloatMath(void)
+{
+}
+
+FloatMath::FloatMath(const FloatMath &other)
+{
+	(void)other;
+}
+
+FloatMath &FloatMath::operator=(const FloatMath &other)
+{
+	(void)other;
+	return (*this);
+}
+
+FloatMath::~FloatMath(void)
+{
+}
 
 /**
  * @returns true if input at i is "nan" and then stops
@@ -106,13 +124,11 @@ std::string FloatMath::atof(const std::string &inp, float &outf)
 		return ("inff");
 	if (isInf(inp, i) && fac == -1)
 		return ("-inff");
-	// Start of float
 	if (!IntMath::isdigit(inp[i]))
 		return (CONVERSION_IMPOSSIBLE);
 	i--;
 	while (IntMath::isdigit(inp[++i]))
 		outf = outf * 10 + (inp[i] - '0');
-	// End of integer
 	if (inp[i] == '.')
 	{
 		i++;
@@ -146,13 +162,11 @@ std::string FloatMath::atod(const std::string &inp, double &outd)
 		return ("inf");
 	if (isInf(inp, i) && fac == -1)
 		return ("-inf");
-	// Start of float
 	if (!IntMath::isdigit(inp[i]))
 		return (CONVERSION_IMPOSSIBLE);
 	i--;
 	while (IntMath::isdigit(inp[++i]))
 		outd = outd * 10 + (inp[i] - '0');
-	// End of integer
 	if (inp[i] == '.')
 	{
 		i++;

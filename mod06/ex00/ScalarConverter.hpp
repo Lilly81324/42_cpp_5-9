@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:21:25 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 16:43:23 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:25:20 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <string>
 # include <iostream>
-# include "IntMath.hpp"
+# include "ScalarConverter.hpp"
 # include "FloatMath.hpp"
 
 
@@ -24,10 +24,10 @@
 class ScalarConverter
 {
 	private:
-		int		_ival;
-		char	_cval;
-		float	_fval;
-		double	_dval;
+		ScalarConverter(void);
+		ScalarConverter(const ScalarConverter &other);
+		ScalarConverter &operator=(const ScalarConverter &other);
+		~ScalarConverter(void);
 	public:
 		static void convert(const std::string &input);
 };

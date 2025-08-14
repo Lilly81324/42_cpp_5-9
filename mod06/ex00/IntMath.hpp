@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 17:43:29 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 16:24:56 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/14 17:24:14 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 
 class IntMath
 {
+	private:
+		IntMath(void);
+		IntMath(const IntMath &other);
+		IntMath &operator=(const IntMath &other);
+		~IntMath(void);
 	public:
 		/**
 		 * @returns true if number is a digit from 0-9

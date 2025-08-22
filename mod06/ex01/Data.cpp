@@ -21,7 +21,6 @@ Data::~Data(void)
 Data::Data(const std::string &name, int val, bool active): name(name), value(val), active(active)
 {}
 
-
 Data::Data(const Data &other)
 {
 	*this = other;

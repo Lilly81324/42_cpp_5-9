@@ -21,10 +21,10 @@ $(OBJ_DIR):
 	mkdir $@
 
 run: $(NAME)
-	./$(NAME)
+	./$(NAME) 42.0f
 
 val: $(NAME)
-	valgrind --leak-check=full ./(NAME)
+	valgrind --leak-check=full ./$(NAME) 42.0f
 
 clean:
 	rm -rf $(OBJ_DIR)

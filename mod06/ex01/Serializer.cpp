@@ -18,6 +18,17 @@ Serializer::Serializer(void)
 Serializer::~Serializer(void)
 {}
 
+Serializer::Serializer(const Serializer &other)
+{
+	(void)other;
+}
+
+Serializer &Serializer::operator=(const Serializer &other)
+{
+	(void)other;
+	return (*this);
+}
+
 uintptr_t Serializer::serialize(Data *data)
 {
 	return (reinterpret_cast<uintptr_t>(data));

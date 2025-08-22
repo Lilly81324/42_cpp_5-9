@@ -5,21 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/13 15:21:25 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 17:25:20 by sikunne          ###   ########.fr       */
+/*   Created: 2025/08/22 16:03:24 by sikunne           #+#    #+#             */
+/*   Updated: 2025/08/22 17:12:25 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCALARCONVERTER_HPP
 # define SCALARCONVERTER_HPP
 
-# include <string>
+# include <iomanip>
 # include <iostream>
-# include "ScalarConverter.hpp"
-# include "FloatMath.hpp"
+# include "ConverterUtil.hpp"
 
-
-# define CHAR_NON_DISP "Non displayable"
+# define PRECISION 1
 
 class ScalarConverter
 {

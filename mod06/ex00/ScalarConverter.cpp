@@ -6,14 +6,11 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:25:42 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/14 17:27:35 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/22 17:11:33 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
-#include <iomanip>
-#include <iostream>
-#include <limits>
 
 ScalarConverter::ScalarConverter(void)
 {
@@ -34,64 +31,39 @@ ScalarConverter::~ScalarConverter(void)
 {
 }
 
-void	printChar(const std::string &input)
-{
-	int			intvalue;
-	std::string	error;
-
-	error = IntMath::asCharLiteral(input, intvalue);
-	if (error != "")
-		error = IntMath::atoi(input, intvalue);
-	std::cout << "char: ";
-	if (error != "")
-	{
-		std::cout << error << std::endl;
-		return ;
-	}
-	if (intvalue < ' ' || intvalue > '~')
-	{
-		std::cout << CHAR_NON_DISP << std::endl;
-		return ;
-	}
-	std::cout << "'" << (char)intvalue << "'"  << std::endl;
-}
-
-void printInt(const std::string &input)
-{
-	int intvalue;
-	std::string error;
-	
-	error = IntMath::atoi(input, intvalue);
-	std::cout << "int: ";
-	if (error != "")
-		std::cout << error << std::endl;
-	else
-		std::cout << intvalue << std::endl;
-}
-
-void printFloat(const std::string &input)
-{
-	float	fvalue = 0.0;
-	double	dvalue;
-	std::string error;
-	
-	error = FloatMath::atof(input, fvalue);
-	std::cout << "float: ";
-	if (error != "")
-		std::cout << error << std::endl;
-	else
-		std::cout << std::fixed << std::setprecision(1) << fvalue << "f" << std::endl;
-	error = FloatMath::atod(input, dvalue);
-	std::cout << "double: ";
-	if (error != "")
-		std::cout << error << std::endl;
-	else
-		std::cout << std::fixed << std::setprecision(1) << dvalue << std::endl;
-}
-
 void	ScalarConverter::convert(const std::string &input)
 {
-	printChar(input);
-	printInt(input);
-	printFloat(input);
+	std::string output;
+	char cvalue;
+	int ivalue;
+	float	fvalue;
+	double	dvalue;
+
+	std::cout << "char: ";
+	output = ConverterUtil::strToChar(input, cvalue);
+	if (output != "")
+		std::cout << output << std::endl;
+	else
+		std::cout << "'" << cvalue << "'" << std::endl;
+
+	std::cout << "int: ";
+	output = ConverterUtil::strToInt(input, ivalue);
+	if (output != "")
+		std::cout << output << std::endl;
+	else
+		std::cout << ivalue << std::endl;
+	
+	std::cout << "float: ";
+	output = ConverterUtil::strToFloat(input, fvalue);
+	if (output != "")
+		std::cout << output << std::endl;
+	else
+		std::cout << std::fixed << std::setprecision(PRECISION) << fvalue << "f" << std::endl;
+	
+	std::cout << "double: ";
+	output = ConverterUtil::strToDouble(input, dvalue);
+	if (output != "")
+		std::cout << output << std::endl;
+	else
+		std::cout << std::fixed << std::setprecision(PRECISION) << fvalue << std::endl;
 }

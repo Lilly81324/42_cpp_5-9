@@ -1,11 +1,11 @@
-NAME = ex0x
+NAME = ex01
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 OBJ_DIR = objs/
 
-SRC = main.cpp Data.cpp
+SRC = main.cpp Data.cpp Serializer.cpp
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.cpp=%.o))
 
 all: $(NAME)

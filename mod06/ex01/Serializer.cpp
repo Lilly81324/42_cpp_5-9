@@ -11,3 +11,19 @@
 /* ************************************************************************** */
 
 #include "Serializer.hpp"
+
+Serializer::Serializer(void)
+{}
+
+Serializer::~Serializer(void)
+{}
+
+uintptr_t Serializer::serialize(Data *data)
+{
+	return (reinterpret_cast<uintptr_t>(data));
+}
+
+Data *Serializer::deserialize(uintptr_t target)
+{
+	return (reinterpret_cast<Data *>(target));
+}

@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 OBJ_DIR = objs/
 
-SRC = main.cpp ScalarConverter.cpp IntMath.cpp FloatMath.cpp
+SRC = main.cpp ScalarConverter.cpp ConverterUtil.cpp
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.cpp=%.o))
 
 all: $(NAME)

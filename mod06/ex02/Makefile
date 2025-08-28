@@ -24,7 +24,7 @@ run: $(NAME)
 	./$(NAME)
 
 val: $(NAME)
-	valgrind --leak-check=full ./(NAME)
+	valgrind --leak-check=full ./$(NAME)
 
 clean:
 	rm -rf $(OBJ_DIR)

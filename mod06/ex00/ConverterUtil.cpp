@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:12:36 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/22 17:08:22 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/08/29 00:18:43 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,23 @@ void	dfraction(const std::string &inp, double &outd, int &i)
 }
 
 /**
+ * @brief returns integer representing char literalm or -1 if invalid
+ */
+bool charLiteral(const std::string &input, char &result)
+{
+	if (input[0] != '\'')
+		return (false);
+	if (!input[1])
+		return (false);
+	if (input[2] != '\'')
+		return (false);
+	if (input[3])
+		return (false);
+	result = input[1];
+	return (true);
+}
+
+/**
  * @brief Tries to calculate a character in int form from the input string
  * @param inp String to convert
  * @param result Place to store the double in
@@ -109,6 +126,8 @@ std::string ConverterUtil::strToChar(const std::string &input, char &result)
 	double	dvalue;
 	std::string error;
 
+	if (charLiteral(input, result))
+		return ("");
 	error = ConverterUtil::strToDouble(input, dvalue);
 	if (error != "")
 		return (CONVERSION_IMPOSSIBLE);

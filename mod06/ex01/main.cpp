@@ -24,7 +24,7 @@ int main(void)
 	uintptr_t ptr;
 	ptr = Serializer::serialize(lel);
 	std::cout << "Converted into uintptr_t:      [" << ptr << "]" << std::endl;
-	std::cout << "in hexadecimal notation:       [0x" << std::hex << ptr << "]" << std::endl;
+	std::cout << "in hexadecimal notation:       [0x" << std::hex << ptr << std::dec << "]" << std::endl;
 
 	std::cout << "-----------------------------------------" << std::endl;
 	Data *other;

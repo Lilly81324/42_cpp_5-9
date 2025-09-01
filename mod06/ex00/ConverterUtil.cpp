@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:12:36 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/29 00:18:43 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/09/01 13:31:55 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ std::string ConverterUtil::strToFloat(const std::string &input, float &result)
 	std::string error;
 
 	error = ConverterUtil::strToDouble(input, dvalue);
+	if (error == CONVERSION_IMPOSSIBLE)
+		return (error);
 	if (error != "")
 		return (error += "f");
 	result = static_cast<float>(dvalue);

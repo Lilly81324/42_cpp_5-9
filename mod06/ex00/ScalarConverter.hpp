@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:03:24 by sikunne           #+#    #+#             */
-/*   Updated: 2025/08/22 17:12:25 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/09/01 14:19:59 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <iostream>
 # include "ConverterUtil.hpp"
 
+#ifndef PRECISION
 # define PRECISION 1
+#endif
 
 class ScalarConverter
 {

@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 12:43:52 by sikunne           #+#    #+#             */
-/*   Updated: 2025/09/03 13:12:03 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/09/03 14:11:17 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 
 # include <iostream>
 
-template <typename T1, typename T2>
-void iter(T1 *array, T2 maxLength, void (*function)(T1))
+/**
+ * @brief Iterates over array, applying a function on each element
+ * @param array Array to iterate over, holds nodes to use function on
+ * @param maxLength Amount of Elements to iterate on 
+ * @param function Function to apply on each node of our array
+ * @warning Amount of elements must be less or equal to size of array
+ */
+template <typename T1>
+void iter(T1 *array, int maxLength, void (*function)(T1 &))
 {
-	T2 length = 0;
+	int length = 0;
 	
+	if (array == NULL || function == NULL)
+		return ;
 	while (length < maxLength)
 	{
 		function(array[length]);

@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 17:25:36 by sikunne           #+#    #+#             */
-/*   Updated: 2025/10/17 17:32:32 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:49:43 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ class Array
 			this->length = 0;
 		};
 
-		class IndexOutOfBounds: std::exception
+		class IndexOutOfBounds: public std::exception
 		{
 			public:
 				virtual const char *what() const throw();

@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 17:24:44 by sikunne           #+#    #+#             */
-/*   Updated: 2025/10/17 17:36:38 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/10/17 18:14:13 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int main(void)
 			arr1[3] = 0;
 			std::cout << arr1 << std::endl;
 		}
-		catch(const Array<int>::IndexOutOfBounds& e)
+		catch(const std::exception& e)
 		{
 			std::cerr << e.what() << '\n';
 		}
@@ -126,6 +126,17 @@ int main(void)
 		{
 			arr2[1] = 0;
 			std::cout << arr2 << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+		std::cout << "Catching as custom Exception" << std::endl;
+		Array<int> arr3(1);
+		try
+		{
+			arr3[1] = 0;
+			std::cout << arr3 << std::endl;
 		}
 		catch(const Array<int>::IndexOutOfBounds& e)
 		{

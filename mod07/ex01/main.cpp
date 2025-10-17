@@ -6,21 +6,21 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 12:49:25 by sikunne           #+#    #+#             */
-/*   Updated: 2025/09/03 14:20:53 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/10/17 16:25:49 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "iter.hpp"
 #include <iostream>
 
-template <typename T1>
-void my_print(T1 param)
+template <typename T2>
+void my_print(T2 param)
 {
 	std::cout << param << " ";
 }
 
-template <typename T>
-void multiply(T &a)
+template <typename T3>
+void multiply(T3 &a)
 {
 	a *= 10;
 }

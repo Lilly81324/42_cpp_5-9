@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 12:43:52 by sikunne           #+#    #+#             */
-/*   Updated: 2025/09/03 14:11:17 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/10/17 16:22:09 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @warning Amount of elements must be less or equal to size of array
  */
 template <typename T1>
-void iter(T1 *array, int maxLength, void (*function)(T1 &))
+void iter(T1 *array, const int maxLength, void (*function)(T1 &))
 {
 	int length = 0;
 	

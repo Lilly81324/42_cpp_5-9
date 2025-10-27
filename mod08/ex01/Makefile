@@ -4,7 +4,7 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -I.
 
 OBJ_DIR = ./obj/
-SRC = main.cpp
+SRC = main.cpp Span.cpp
 RAW_OBJ = $(SRC:%.cpp=%.o)
 OBJ = $(addprefix $(OBJ_DIR), $(RAW_OBJ))
 

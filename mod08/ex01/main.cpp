@@ -1,94 +1,49 @@
-#include "easyfind.hpp"
+#include "Span.hpp"
 
-template<typename T>
-void wrapper(T cont, int target)
+#define INT_MIN -2147483648
+#define INT_MAX 2147483647
+#define SIZE 35000
+
+/**
+ * @brief Display duration between two timestamps
+ * @note timestamps created with gettimeofday()
+ */
+void showTimestamp(const timeval &past, const timeval &present)
 {
-	try
+	long seconds;
+	long microseconds;
+
+	seconds = present.tv_sec - past.tv_sec;
+	microseconds = present.tv_usec - past.tv_usec;
+
+	if (microseconds < 0)
 	{
-		typename T::iterator it = easyfind(cont, target);
-		if (*it == target)
-			std::cout << "Value found";
-		else
-			std::cout << "Value NOT found";
+		microseconds += 1000000;
+		seconds -= 1;
 	}
-	catch (const CantFindException &e)
-	{
-		std::cout << e.what() << " (" << target << ')';
-	}
-}
 
-// For push_back
-template<typename T>
-void test(T &v)
-{
-	std::cout << "  Empty Container" << std::endl;
-	std::cout << "    ";
-	wrapper(v, 0);
-	std::cout << std::endl;
-	v.push_back(1);
-	v.push_back(2);
-	v.push_back(3);
-	std::cout << "  Value in Container" << std::endl;
-	std::cout << "    ";
-	wrapper(v, 2);
-	std::cout << std::endl;
-	std::cout << "  Value not in Container" << std::endl;
-	std::cout << "    ";
-	wrapper(v, 4);
-	std::cout << std::endl;
-}
-
-// For insert
-template<typename T>
-void test2(T &v)
-{
-	std::cout << "  Empty Container" << std::endl;
-	std::cout << "    ";
-	wrapper(v, 0);
-	std::cout << std::endl;
-	v.insert(1);
-	v.insert(2);
-	v.insert(3);
-	std::cout << "  Value in Container" << std::endl;
-	std::cout << "    ";
-	wrapper(v, 2);
-	std::cout << std::endl;
-	std::cout << "  Value not in Container" << std::endl;
-	std::cout << "    ";
-	wrapper(v, 4);
-	std::cout << std::endl;
+	std::cout << "Duration: " << seconds << " seconds and " << microseconds << " microseconds" << std::endl;
 }
 
 int main(void)
 {
+	struct timeval past;
+	gettimeofday(&past, NULL);
+	Span span(SIZE);
+	for (int i = 0; i < SIZE; i++)
 	{
-		std::cout << '\n' << "Testing Vector ---------" << std::endl;
-		std::vector<int> v;
-		test(v);
+		span.addNumber(i);
 	}
-	{
-		std::cout << '\n'  << "Testing Dequeue --------" << std::endl;
-		std::deque<int> v;
-		test(v);
-	}
-	{
-		std::cout << '\n'  << "Testing List -----------" << std::endl;
-		std::list<int> v;
-		test(v);
-	}
-	{
-		std::cout << '\n'  << "Testing Set ------------" << std::endl;
-		std::set<int> v;
-		test2(v);
-	}
-	{
-		std::cout << '\n'  << "Testing Multiset ------------" << std::endl;
-		std::multiset<int> v;
-		test2(v);
-	}
-	// Arrays and forward_lists are C++11 and later :c
-	// Maps are associative containers, which are mostly the same, but take lots of effort
-	// Unsorted Containers are basically the same
-	// Container Adapters just use the existing containers
+	// span.addNumber(5);
+	// span.addNumber(1);
+	// span.addNumber(9);
+	// span.addNumber(4);
+	// span.addNumber(20);
+
+	std::cout << "Shortest Range: " << span.shortestSpan() << std::endl;
+	std::cout << "Longest Range: " << span.longestSpan() << std::endl;
+	struct timeval present;
+	gettimeofday(&present, NULL);
+	showTimestamp(past, present);
 	return (0);
 }

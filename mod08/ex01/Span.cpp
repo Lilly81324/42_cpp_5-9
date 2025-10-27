@@ -21,6 +21,16 @@ Span::~Span()
 		arr.clear();
 }
 
+/**
+ * @brief Add number to multiset
+ * @warning throws Exception when entry limit exceeded
+ * 
+ * Calling this function x times, takes y seconds
+ *     20.000 = .01s
+ *    200.000 = .1s
+ *  2.000.000 = 1s
+ * 20.000.000 = 13s
+ */
 void Span::addNumber(int entry)
 {
 	// If adding would exceed limit, throw error
@@ -53,6 +63,10 @@ unsigned int Span::longestSpan()
  * sorting assures the next number will be the next smallest number.
  * Then check the current smallest difference against the current difference
  * If the new one is smaller, store that as current smallest
+ * Calling with array of x elements, takes y seconds
+ *    400.000 = .01s
+ *  4.000.000 = .1s
+ * 40.000.000 = 1s
  */
 unsigned int Span::shortestSpan()
 {

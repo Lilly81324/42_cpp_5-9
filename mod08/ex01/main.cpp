@@ -1,49 +1,33 @@
 #include "Span.hpp"
 
-#define INT_MIN -2147483648
-#define INT_MAX 2147483647
-#define SIZE 35000
+#define SUBJECT_COUNT 10000
 
-/**
- * @brief Display duration between two timestamps
- * @note timestamps created with gettimeofday()
- */
-void showTimestamp(const timeval &past, const timeval &present)
+void fillSpan(Span &span, int count)
 {
-	long seconds;
-	long microseconds;
-
-	seconds = present.tv_sec - past.tv_sec;
-	microseconds = present.tv_usec - past.tv_usec;
-
-	if (microseconds < 0)
+	for (int i = 0; i < count; i++)
 	{
-		microseconds += 1000000;
-		seconds -= 1;
+		span.addNumber(i);
 	}
-
-	std::cout << "Duration: " << seconds << " seconds and " << microseconds << " microseconds" << std::endl;
 }
 
 int main(void)
 {
-	struct timeval past;
-	gettimeofday(&past, NULL);
-	Span span(SIZE);
-	for (int i = 0; i < SIZE; i++)
 	{
-		span.addNumber(i);
+		std::cout << std::endl << "--== Simple test (2, 5, 9, 10) ==--" << std::endl;
+		Span span(4);
+		span.addNumber(2);
+		span.addNumber(5);
+		span.addNumber(9);
+		span.addNumber(10);
+		std::cout << "Longest Range: " << span.longestSpan() << std::endl;
+		std::cout << "Shortest Range: " << span.shortestSpan() << std::endl;
 	}
-	// span.addNumber(5);
-	// span.addNumber(1);
-	// span.addNumber(9);
-	// span.addNumber(4);
-	// span.addNumber(20);
-
-	std::cout << "Shortest Range: " << span.shortestSpan() << std::endl;
-	std::cout << "Longest Range: " << span.longestSpan() << std::endl;
-	struct timeval present;
-	gettimeofday(&present, NULL);
-	showTimestamp(past, present);
+	{
+		std::cout << std::endl << "--== Very long list (" << 200 * SUBJECT_COUNT <<  ") ==--" << std::endl;
+		Span span(200 * SUBJECT_COUNT);
+		fillSpan(span, 200 * SUBJECT_COUNT);
+		std::cout << "Longest Span: " << span.longestSpan() << std::endl;
+		std::cout << "Shortest Span: " << span.shortestSpan() << std::endl;
+	}
 	return (0);
 }

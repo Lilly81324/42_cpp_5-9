@@ -13,7 +13,6 @@
 // For writing to terminal
 #include <iostream>
 
-
 class CantFindException : public std::exception
 {
 	public:
@@ -22,7 +21,7 @@ class CantFindException : public std::exception
 };
 
 template<typename T>
-typename T::iterator easyfind(T &container, int size);
+typename T::iterator easyfind(T &container, int target);
 
 // Include Definition AFTER Declaration, but BEFORE Usage
 #include "easyfind.tpp"

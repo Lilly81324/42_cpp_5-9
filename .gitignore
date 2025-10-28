@@ -55,9 +55,3 @@ dkms.conf
 *.dwo
 
 .vscode/
-
-# Binary files
-ex00
-ex01
-ex02
-ex03

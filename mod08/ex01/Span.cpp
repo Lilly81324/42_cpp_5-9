@@ -21,16 +21,6 @@ Span::~Span()
 		arr.clear();
 }
 
-/**
- * @brief Add number to multiset
- * @warning throws Exception when entry limit exceeded
- * 
- * Calling this function x times, takes y seconds
- *     20.000 = .01s
- *    200.000 = .1s
- *  2.000.000 = 1s
- * 20.000.000 = 13s
- */
 void Span::addNumber(int entry)
 {
 	// If adding would exceed limit, throw error
@@ -40,13 +30,56 @@ void Span::addNumber(int entry)
 	this->entries++;
 }
 
-/**
- * @brief Get biggest difference between numbers
- * @note arr.end() is just AFTER the last element, so has to be decreased
- * 
- * Since array is sorted, biggest number is at the end,
- * and smallest is at the start, so just return their diff
- */
+void Span::addRange(const std::vector<int> &range)
+{
+	std::vector<int>::const_iterator it = range.begin();
+	std::vector<int>::const_iterator end = range.end();
+	for (; it != end; it++)
+		this->addNumber(*it);
+}
+
+void Span::addRange(int start, int end, int increase)
+{	
+	// No Direction
+	if (increase == 0)
+		return ;
+
+	// Direction is positive, but increase is negative
+	if (start < end && increase <= 0)
+		return ;
+	
+	// Direction is negative, but increase is positive
+	if (start > end && increase >= 0)
+		return ;
+
+	// Keep adding numbers
+	while (start <= end)
+	{
+		this->addNumber(start);
+		start += increase;
+	}
+}
+
+unsigned int Span::shortestSpan()
+{
+	if (this->entries < 2)
+	throw(SpanEntryException());
+	
+	std::multiset<int>::const_iterator end = arr.end();
+	std::multiset<int>::const_iterator it = arr.begin();
+	std::multiset<int>::const_iterator next = arr.begin();
+	next++;
+	
+	unsigned int bestRange = *next - *it;
+	for (; next != end; next++)
+	{
+		if ((unsigned int)(*next) - (*it) < bestRange)
+		bestRange = (*next) - (*it);
+		it = next;
+	}
+	return (bestRange);
+}
+
 unsigned int Span::longestSpan()
 {
 	if (this->entries < 2)
@@ -54,36 +87,4 @@ unsigned int Span::longestSpan()
 	std::multiset<int>::const_iterator end = arr.end();
 	end--;
 	return (*end - *arr.begin());
-}
-
-/**
- * @brief Get smallest difference between numbers
- * 
- * Iterates over the sorted Array, 
- * sorting assures the next number will be the next smallest number.
- * Then check the current smallest difference against the current difference
- * If the new one is smaller, store that as current smallest
- * Calling with array of x elements, takes y seconds
- *    400.000 = .01s
- *  4.000.000 = .1s
- * 40.000.000 = 1s
- */
-unsigned int Span::shortestSpan()
-{
-	if (this->entries < 2)
-		throw(SpanEntryException());
-
-	std::multiset<int>::const_iterator end = arr.end();
-	std::multiset<int>::const_iterator it = arr.begin();
-	std::multiset<int>::const_iterator next = arr.begin();
-	next++;
-
-	unsigned int bestRange = *next - *it;
-	for (; next != end; next++)
-	{
-		if ((unsigned int)(*next) - (*it) < bestRange)
-			bestRange = (*next) - (*it);
-		it = next;
-	}
-	return (bestRange);
 }

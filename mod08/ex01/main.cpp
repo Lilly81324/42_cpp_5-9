@@ -6,21 +6,15 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:06:56 by sikunne           #+#    #+#             */
-/*   Updated: 2025/10/28 16:06:57 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/10/29 18:29:07 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
+#define MIN_INT -2147483648
+#define MAX_INT 2147483647
 #define SUBJECT_COUNT 10000
-
-void fillSpan(Span &span, int count)
-{
-	for (int i = 0; i < count; i++)
-	{
-		span.addNumber(i);
-	}
-}
 
 bool tryShortest(Span &span, int target)
 {
@@ -146,18 +140,18 @@ int main(void)
 
 	{ // shortest and longest Span Exceptions
 		std::cout << std::endl << "--== shortestSpan and longestSpan ==--" << std::endl;
-		bool success = false;
+		bool fail = false;
 		Span span(3);
-		success = success | tryShortest(span, 0);
-		success = success | tryLongest(span, 0);
+		fail = fail | tryShortest(span, 0);
+		fail = fail | tryLongest(span, 0);
 		span.addNumber(5);
-		success = success | tryShortest(span, 0);
-		success = success | tryLongest(span, 0);
+		fail = fail | tryShortest(span, 0);
+		fail = fail | tryLongest(span, 0);
 		span.addNumber(10);
 		span.addNumber(12);
-		success = success | !tryShortest(span, 2);
-		success = success | !tryLongest(span, 7);
-		if (!success)
+		fail = fail | !tryShortest(span, 2);
+		fail = fail | !tryLongest(span, 7);
+		if (!fail)
 			std::cout << "All Operations done correctly" << std::endl;
 		else
 			std::cout << "Some Operation that shouldn't work, worked" << std::endl;
@@ -165,16 +159,16 @@ int main(void)
 
 	{ // Edge Case - Empty Span
 		std::cout << std::endl << "--== Edge Case - Empty Span ==--" << std::endl;
-		bool success = false;
+		bool fail = false;
 		Span span(0);
-		success = success | tryAdd(span, 0);
-		success = success | tryAdd(span, 1);
-		success = success | tryAddRange(span, 0, 1, 1);
+		fail = fail | tryAdd(span, 0);
+		fail = fail | tryAdd(span, 1);
+		fail = fail | tryAddRange(span, 0, 1, 1);
 		std::vector<int> vec;
 		vec.push_back(1);
 		vec.push_back(3);
-		success = success | tryAddVector(span, vec);
-		if (!success)
+		fail = fail | tryAddVector(span, vec);
+		if (!fail)
 			std::cout << "All Operations done correctly" << std::endl;
 		else
 			std::cout << "Some Operation that shouldn't work, worked" << std::endl;
@@ -182,17 +176,17 @@ int main(void)
 
 	{ // Edge Case - Small Span
 		std::cout << std::endl << "--== Edge Case - Small Span ==--" << std::endl;
-		bool success = false;
+		bool fail = false;
 		Span span(1);
 		span.addNumber(5);
-		success = success | tryAdd(span, 0);
-		success = success | tryAdd(span, 1);
-		success = success | tryAddRange(span, 0, 1, 1);
+		fail = fail | tryAdd(span, 0);
+		fail = fail | tryAdd(span, 1);
+		fail = fail | tryAddRange(span, 0, 1, 1);
 		std::vector<int> vec;
 		vec.push_back(1);
 		vec.push_back(3);
-		success = success | tryAddVector(span, vec);
-		if (!success)
+		fail = fail | tryAddVector(span, vec);
+		if (!fail)
 			std::cout << "All Operations done correctly" << std::endl;
 		else
 			std::cout << "Some Operation that shouldn't work, worked" << std::endl;
@@ -214,6 +208,15 @@ int main(void)
 			std::cout << "All Operations done correctly" << std::endl;
 		else
 			std::cout << "Some Operation that shouldn't work, worked" << std::endl;
+	}
+
+	{ // Edge Case - Maximum Values
+		std::cout << std::endl << "--== Edge Case - Maximum Values ==--" << std::endl;
+		Span span(2);
+		span.addNumber(MIN_INT);
+		span.addNumber(MAX_INT);
+		std::cout << "Longest Range: " << span.longestSpan() << std::endl;
+		std::cout << "Shortest Range: " << span.shortestSpan() << std::endl;
 	}
 
 	return (0);

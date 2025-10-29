@@ -1,7 +1,7 @@
 #include "easyfind.hpp"
 
 template<typename T>
-void wrapper(T cont, int target)
+void look_for(T cont, int target)
 {
 	try
 	{
@@ -23,18 +23,18 @@ void test(T &v)
 {
 	std::cout << "  Empty Container" << std::endl;
 	std::cout << "    ";
-	wrapper(v, 0);
+	look_for(v, 0);
 	std::cout << std::endl;
 	v.push_back(1);
 	v.push_back(2);
 	v.push_back(3);
 	std::cout << "  Value in Container" << std::endl;
 	std::cout << "    ";
-	wrapper(v, 2);
+	look_for(v, 2);
 	std::cout << std::endl;
 	std::cout << "  Value not in Container" << std::endl;
 	std::cout << "    ";
-	wrapper(v, 4);
+	look_for(v, 4);
 	std::cout << std::endl;
 }
 
@@ -44,18 +44,18 @@ void test2(T &v)
 {
 	std::cout << "  Empty Container" << std::endl;
 	std::cout << "    ";
-	wrapper(v, 0);
+	look_for(v, 0);
 	std::cout << std::endl;
 	v.insert(1);
 	v.insert(2);
 	v.insert(3);
 	std::cout << "  Value in Container" << std::endl;
 	std::cout << "    ";
-	wrapper(v, 2);
+	look_for(v, 2);
 	std::cout << std::endl;
 	std::cout << "  Value not in Container" << std::endl;
 	std::cout << "    ";
-	wrapper(v, 4);
+	look_for(v, 4);
 	std::cout << std::endl;
 }
 

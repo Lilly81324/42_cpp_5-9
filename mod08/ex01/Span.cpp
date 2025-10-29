@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:06:53 by sikunne           #+#    #+#             */
-/*   Updated: 2025/10/28 16:06:53 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/10/29 18:19:24 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,20 @@ void Span::addRange(int start, int end, int increase)
 unsigned int Span::shortestSpan()
 {
 	if (this->entries < 2)
-	throw(SpanEntryException());
+		throw(SpanEntryException());
 	
 	std::multiset<int>::const_iterator end = arr.end();
 	std::multiset<int>::const_iterator it = arr.begin();
 	std::multiset<int>::const_iterator next = arr.begin();
 	next++;
-	
+
 	unsigned int bestRange = *next - *it;
+	unsigned int diff;
 	for (; next != end; next++)
 	{
-		if ((unsigned int)(*next) - (*it) < bestRange)
-		bestRange = (*next) - (*it);
+		diff = (unsigned int)(*next) - (unsigned int)(*it);
+		if (diff < bestRange)
+			bestRange = diff;
 		it = next;
 	}
 	return (bestRange);

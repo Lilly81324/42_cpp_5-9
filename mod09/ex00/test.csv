@@ -1,0 +1,5 @@
+
+YYYY-MM-DD,V
+
+Y, M, D as (u)int
+V as float or uint between 0-1000

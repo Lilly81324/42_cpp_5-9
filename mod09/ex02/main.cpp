@@ -9,9 +9,25 @@
 // Good Containers:
 // multiset / set -> Does not use merge-insert sort?
 
+#include <iostream>
+
 int main(void)
 {
-	return (0);
+	std::vector<int> vec;
+	std::vector<int *> vec1;
+	vec.push_back(9);
+	vec.push_back(8);
+	vec.push_back(7);
+	vec.push_back(6);
+	vec.push_back(5);
+	vec.push_back(4);
+	vec.push_back(3);
+	vec.push_back(2);
+	vec.push_back(1);
+	for (int i = 0; i < 9; i++)
+	vec1.push_back(&(vec[i]));
+		merge_sort(vec1);
+	std::cout << vec[0] << vec[1] << vec[2] << std::endl;
 }
 
 // Compare everything in pairs
@@ -59,3 +75,7 @@ int main(void)
 // Compare current element to it
 // "Cut" list in half, at the middle (inclusive)
 // Repeat insertion in this new halfed list
+
+// We have a sorted tail (left) of numbers
+// This tail goes from the leftmost position (start)
+// to the end of

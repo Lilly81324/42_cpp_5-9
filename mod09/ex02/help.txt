@@ -83,3 +83,54 @@ Else
 Binary insert UnIn between index 0 to UnIn-1
 
 Set UnIn to NextUnIn
+
+9 8 7 6 5 4 3 2 1
+
+Sort in pairs
+
+(8 9) (6 7) (4 5) (2 3) 1
+
+Recursively sort
+{
+	9 7 5 3
+	
+	Sort in pairs
+
+	7 9 3 5
+
+	Recursively sort
+	{
+		9 5
+
+		Sort in pairs
+
+		5 9
+
+		do nothing
+	}
+	
+	Rearrange according to pairs
+	{
+		5 9 7 3
+
+		Keep pairs together after first
+		5 (7, 9) 3
+
+		Binary insert rest
+		3, 5, (7, 9)
+	}
+	3, 5, 7, 9
+}
+
+Rearrange according to pairs
+{
+	3 5 7 9
+
+	Keep pairs together after first
+	3 4 5 6 7 8 9 2 1
+
+	Binary insert rest
+	1 2 3 4 5 6 7 8 9
+}
+
+1 2 3 4 5 6 7 8 9

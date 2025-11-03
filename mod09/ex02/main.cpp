@@ -14,7 +14,6 @@
 int main(void)
 {
 	std::vector<int> vec;
-	std::vector<int *> vec1;
 	vec.push_back(9);
 	vec.push_back(8);
 	vec.push_back(7);
@@ -24,10 +23,7 @@ int main(void)
 	vec.push_back(3);
 	vec.push_back(2);
 	vec.push_back(1);
-	for (int i = 0; i < 9; i++)
-	vec1.push_back(&(vec[i]));
-		merge_sort(vec1);
-	std::cout << vec[0] << vec[1] << vec[2] << std::endl;
+	merge_sort(vec);
 }
 
 // Compare everything in pairs

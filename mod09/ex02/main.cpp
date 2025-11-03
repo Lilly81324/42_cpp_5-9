@@ -1,4 +1,6 @@
-#include "PmergeMe.hpp"
+#include "VectorSort1.hpp"
+#include <sys/time.h>
+#include <iostream>
 
 // Must use merge-insert algorythm to sort uints
 
@@ -9,21 +11,42 @@
 // Good Containers:
 // multiset / set -> Does not use merge-insert sort?
 
-#include <iostream>
+void print_duration(timeval present, timeval past)
+{
+	long s = present.tv_sec - past.tv_sec;
+	long micros = present.tv_usec - past.tv_usec;
+
+	if (micros < 0)
+	{
+		micros += 1000000;
+		s -= 1;
+	}
+
+	std::cout << "Time passed: " << s << " seconds, " << micros << " microseconds (" \
+		<< ((double)s + ((double)micros / (double)1000000)) << "s)" << std::endl;
+}
+
+
+void test_result(const std::string &line, const timeval &past)
+{
+	struct timeval present;
+	gettimeofday(&present, 0);
+	std::cout << line << std::endl;
+	print_duration(present, past);
+}
 
 int main(void)
 {
+	struct timeval past;
 	std::vector<int> vec;
-	vec.push_back(9);
-	vec.push_back(8);
-	vec.push_back(7);
-	vec.push_back(6);
-	vec.push_back(5);
-	vec.push_back(4);
-	vec.push_back(3);
-	vec.push_back(2);
-	vec.push_back(1);
-	merge_sort(vec);
+	for (int i = 80000; i >= 0; i--)
+		vec.push_back(i);
+	gettimeofday(&past, 0);
+	VectorSort::merge_sort(vec);
+	if (!VectorSort::isSorted(vec))
+		std::cout << "Not sorted! Failure!" << std::endl;
+	test_result("VectorSort1", past);
+	return 0;
 }
 
 // Compare everything in pairs

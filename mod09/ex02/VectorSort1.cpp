@@ -1,6 +1,5 @@
 
-# include "PmergeMe.hpp"
-#include <vector>
+# include "VectorSort1.hpp"
 
 /**
  * @brief Puts the number from <pos> left, to <to>, shifting the rest right
@@ -8,10 +7,10 @@
  * @param to Index of the position to move <pos> to
  * @note If <position> is left of <to>, or exceeds list size, nothing happens
  */
-void push_before(unsigned int pos, unsigned int to, std::vector<int> &list)
+void VectorSort::push_before(int pos, int to, std::vector<int> &list)
 {
 	// This code is redundant, because you should never call this with bad input!
-	if (pos < to || pos > list.size() - 1)
+	if (pos <= to || pos > (int)list.size() - 1)
 		return ;
 	// ---------------------
 	int temp = list[pos];
@@ -26,7 +25,7 @@ void push_before(unsigned int pos, unsigned int to, std::vector<int> &list)
 /**
  * Use swap(list[i], list[i + 1])
  */
-void	ft_swap(int &pos1, int &pos2)
+void	VectorSort::ft_swap(int &pos1, int &pos2)
 {
 	int temp;
 	temp = pos1;
@@ -44,7 +43,7 @@ void	ft_swap(int &pos1, int &pos2)
  * @warning <pos>, <to> and <from> have to be valid indices in list
  * @warning <pos> > to >= from
  */
-void insert(unsigned int pos, unsigned int from, unsigned int to, std::vector<int> &list)
+void VectorSort::insert(unsigned int pos, unsigned int from, unsigned int to, std::vector<int> &list)
 {
 	unsigned int mid = (from + to) / 2;
 	// Position found
@@ -68,7 +67,7 @@ void insert(unsigned int pos, unsigned int from, unsigned int to, std::vector<in
 		insert(pos, mid, to, list);
 }
 
-void sortPairs(std::vector<int> &list)
+void VectorSort::sortPairs(std::vector<int> &list)
 {
 	unsigned int size = list.size();
 	for (unsigned int i = 0; i + 1 < size; i += 2)
@@ -78,16 +77,7 @@ void sortPairs(std::vector<int> &list)
 	}
 }
 
-/*
-We take the element at UnIn + 2, and 
-Check if its bigger then UnIn + 1
-	Keep it where it is
-Else
-	Binary insert it between index 0 to UnIn-1
-	Increase UnIn by 1 to keep it correct
-Binary insert UnIn between index 0 to UnIn-1
- */
-void cpy(std::vector<int> &list, std::vector<int> &cpy)
+void VectorSort::recur(std::vector<int> &list, std::vector<int> &cpy)
 {
 	// Make list of every odd position
 	unsigned int end = list.size();
@@ -96,7 +86,7 @@ void cpy(std::vector<int> &list, std::vector<int> &cpy)
 	merge_sort(cpy);
 }
 
-bool isSorted(const std::vector<int> &list)
+bool VectorSort::isSorted(const std::vector<int> &list)
 {
 	std::vector<int>::const_iterator it = list.begin();
 	std::vector<int>::const_iterator next = list.begin();
@@ -111,82 +101,66 @@ bool isSorted(const std::vector<int> &list)
 	return (true);
 }
 
-void makePairs(std::vector<std::pair<int, int> > &pair, std::vector<int> &list)
+unsigned int VectorSort::pos_of(std::vector<int> &list, int goal)
 {
-	pair.clear();
-	pair.reserve(list.size() / 2);
-	unsigned int end = static_cast<unsigned int>(list.size());
-	for (unsigned int i = 0; i + 1 < end; i += 2)
-		pair.push_back(std::pair<int, int>(list[i], list[i + 1]));
-}
-
-std::pair<int, int> find_pair(int goal, std::vector<std::pair<int, int> > &pairs)
-{
-	std::vector<std::pair<int, int> >::iterator end = pairs.end();
-	std::vector<std::pair<int, int> >::const_iterator it = pairs.begin();
-	// Go through all pairs, and find this number
-	for (; it != end; it++)
+	unsigned int end = list.size();
+	unsigned int i = 0;
+	
+	for (; i < end; i++)
 	{
-		if (it->second == goal)
-			return (std::pair<int, int>(it->first, it->second));
+		if (list[i] == goal)
+			return (i);
 	}
-	return (std::pair<int, int>(0, 0));
+	return (0);
 }
 
-std::vector<int> readjust_list(std::vector<int> &list, std::vector<std::pair<int, int> > &pair, std::vector<int> &sort)
+std::vector<int> VectorSort::readjust_list(std::vector<int> &list, std::vector<int> &sort)
 {
-	unsigned int end = sort.size();
-	// For all in pairs, except first one
 	std::vector<int> newer;
 	newer.clear();
 	newer.reserve(list.size());
-	unsigned int i = 1;
+	unsigned int index;
+
+	// Go through all sorted numbers
+	int end = sort.size();
+	index = pos_of(list, sort[0]);
+	newer.push_back(list[index - 1]);
+	newer.push_back(list[index]);
+	int i = 1;
 	for (; i < end; i++)
 	{
-		// Find the pairs for the sorted order
-		std::pair<int, int> current;
-		current = find_pair(sort[i], pair);
-		// Add those back into the new array
-		newer.push_back(current.first);
-		newer.push_back(current.second);
+		// Get the current number from sort and its position in list
+		index = pos_of(list, sort[i]);
+		newer.push_back(list[index - 1]);
+		insert(newer.size() - 1, 0, newer.size() - 2, newer);
+		newer.push_back(list[index]);
 	}
-	// For the rest of the numbers
-	i--;
-	i *= 2;
-	for (; i < (unsigned int)list.size(); i++)
+	i = newer.size();
+	// Insert the rest of the unsorted numbers
+	for (; i < (int)list.size(); i++)
 	{
 		newer.push_back(list[i]);
-		insert(i, 0, newer.size() - 2, newer);
+		insert(newer.size() - 1, 0, newer.size() - 2, newer);
 	}
 	return (newer);
 }
 
-void merge_sort(std::vector<int> &list)
+void VectorSort::merge_sort(std::vector<int> &list)
 {
-	unsigned int UnIn;
-	unsigned int nextUnIn;
-
 	if (isSorted(list))
 		return ;
-	std::vector<std::pair<int, int> > pairs;
 	std::vector<int> sort;
 	sortPairs(list);
 	if (isSorted(list))
 		return ;
-	makePairs(pairs, list);
-	cpy(list, sort);
-	list = readjust_list(list, pairs, sort);
-
-	// UnIn = 2;
-	// while (list.size() >= UnIn + 3)
-	// {
-	// 	nextUnIn = UnIn + 4;
-	// 	if (list[UnIn + 2] < list[UnIn + 1])
-	// 	{
-	// 		insert(UnIn + 2, 0, UnIn - 1, list);
-	// 		UnIn++;
-	// 	}
-	// 	insert(UnIn, 0, UnIn - 1, list);
-	// 	UnIn = nextUnIn;
-	// }
+	recur(list, sort);
+	list = readjust_list(list, sort);
 }
+
+// Things we need to do:
+// - Access elements as we move through
+// - Delete elements
+
+// Traits we are looking for:
+// - Quick access of values (for comparisons)
+// - Deletion of elements at any position (for removing used numbers from our unsorted list, when creating a new sorted list)

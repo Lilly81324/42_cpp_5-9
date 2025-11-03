@@ -1,11 +1,11 @@
 NAME = PmergeMe
-TARGET = test.txt
+TARGET = ""
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 OBJ_DIR = ./obj/
 
-SRC = merge_sort.cpp main.cpp
+SRC = VectorSort1.cpp main.cpp
 RAW = $(SRC:%.cpp=%.o)
 OBJ = $(addprefix $(OBJ_DIR), $(RAW))
 

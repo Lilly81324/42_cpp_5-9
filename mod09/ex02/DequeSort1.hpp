@@ -5,6 +5,15 @@
 #include <utility>
 #include <deque>
 
+/**
+ * Stat sheet:
+ * 4000		=	  .26s
+ * 7800		=	 1.00s
+ * 10000	=	 1.68s
+ * 20000	=	 6.70s
+ * 30000	=	15.11s
+ * Result = wow, this is garbage
+ */
 class DequeSort
 {
 	private:
@@ -13,8 +22,7 @@ class DequeSort
 
 		static void	ft_swap(int &pos1, int &pos2);
 
-		// O(n)
-		static void insert(unsigned int pos, unsigned int from, unsigned int to, std::deque<int> &list);
+		static void insert(int num, unsigned int from, unsigned int to, std::deque<int> &list);
 
 		// O(n)
 		static void sortPairs(std::deque<int> &list);

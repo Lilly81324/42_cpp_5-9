@@ -35,7 +35,7 @@ void	DequeSort::ft_swap(int &pos1, int &pos2)
 
 /**
  * @brief Insert number from array into a sorted range
- * @param pos is the position of the number in the array, that you want to insert/move
+ * @param num is the number to add
  * @param from is the index of the start of the sorted range (inclusive)
  * @param to is the index of the end of the sorted range (inclusive)
  * @param list is the array/list to service
@@ -43,28 +43,29 @@ void	DequeSort::ft_swap(int &pos1, int &pos2)
  * @warning <pos>, <to> and <from> have to be valid indices in list
  * @warning <pos> > to >= from
  */
-void DequeSort::insert(unsigned int pos, unsigned int from, unsigned int to, std::deque<int> &list)
+void DequeSort::insert(int num, unsigned int from, unsigned int to, std::deque<int> &list)
 {
-	// unsigned int mid = (from + to) / 2;
-	// // Position found
-	// if (to - from <= 1)
-	// {
-	// 	// if before start, push to start
-	// 	if (list[pos] < list[from])
-	// 		push_before(pos, from, list);
-	// 	// if before end, push to end
-	// 	else if (list[pos] < list[to])
-	// 		push_before(pos, to, list);
-	// 	// bigger then end, push just after end
-	// 	else
-	// 		push_before(pos, to + 1, list);
-	// 		// this could in theory exceed the limit, but in practice, should never
-	// }
-	// // Element has to go in left half
-	// else if (list[mid] > list[pos])
-	// 	insert(pos, from, mid, list);
-	// else
-	// 	insert(pos, mid, to, list);
+	unsigned int mid = (from + to) / 2;
+	// Position found
+	if (to - from <= 1)
+	{
+		// if before start, push to start
+		std::deque<int>::iterator it = list.begin();
+		if (num < list[from])
+			list.insert(it + from, num);
+		// if before end, push to end
+		else if (num < list[to])
+			list.insert(it + to, num);
+		// bigger then end, push just after end
+		else
+			list.insert(it + to + 1, num);
+			// this could in theory exceed the limit, but in practice, should never
+	}
+	// Element has to go in left half
+	else if (list[mid] > num)
+		insert(num, from, mid, list);
+	else
+		insert(num, mid, to, list);
 }
 
 // O(n) unavoidable, unless different algorithm used
@@ -108,15 +109,15 @@ bool DequeSort::isSorted(const std::deque<int> &list)
 
 unsigned int DequeSort::pos_of(std::deque<int> &list, int goal)
 {
-	// unsigned int end = list.size();
-	// unsigned int i = 0;
+	unsigned int end = list.size();
+	unsigned int i = 0;
 	
-	// for (; i < end; i++)
-	// {
-	// 	if (list[i] == goal)
-	// 		return (i);
-	// }
-	// return (0);
+	for (; i < end; i++)
+	{
+		if (list[i] == goal)
+			return (i);
+	}
+	return (0);
 }
 
 std::deque<int> DequeSort::readjust_list(std::deque<int> &list, std::deque<int> &sort)
@@ -135,24 +136,22 @@ std::deque<int> DequeSort::readjust_list(std::deque<int> &list, std::deque<int> 
 	{
 		// Get the current number from sort and its position in list
 		index = pos_of(list, sort[i]);
-		newer.push_back(list[index - 1]);
-		insert(newer.size() - 1, 0, newer.size() - 2, newer);
+		insert(list[index - 1], 0, newer.size() - 1, newer);
 		newer.push_back(list[index]);
 	}
 	i = newer.size();
 	// Insert the rest of the unsorted numbers
 	for (; i < (int)list.size(); i++)
 	{
-		newer.push_back(list[i]);
-		insert(newer.size() - 1, 0, newer.size() - 2, newer);
+		insert(list[i], 0, newer.size() - 1, newer);
 	}
 	return (newer);
 }
 
 void DequeSort::merge_sort(std::deque<int> &list)
 {
-	if (isSorted(list))
-		return ;
+	if (list.size() <= 2)
+		return (sortPairs(list));
 	std::deque<int> sort;
 	sortPairs(list);
 	if (isSorted(list))

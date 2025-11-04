@@ -1,5 +1,23 @@
 
 # include "SortVector1.hpp"
+#include <sys/time.h>
+#include <iostream>
+
+void logTime(double *store)
+{
+	struct timeval present;
+	gettimeofday(&present, 0);
+	long s = present.tv_sec - g_last_stamp.tv_sec;
+	long micros = present.tv_usec - g_last_stamp.tv_usec;
+	
+	if (micros < 0)
+	{
+		micros += 1000000;
+		s -= 1;
+	}
+	
+	*store += (double)s + ((double)micros / (double)1000000);
+}
 
 /**
  * @brief Puts the number from <pos> left, to <to>, shifting the rest right
@@ -27,10 +45,12 @@ void Sort::push_before(int pos, int to, std::vector<int> &list)
  */
 void	Sort::ft_swap(int &pos1, int &pos2)
 {
+	gettimeofday(&g_last_stamp, 0);
 	int temp;
 	temp = pos1;
 	pos1 = pos2;
 	pos2 = temp;
+	logTime(&g_swaptime);
 }
 
 /**
@@ -104,14 +124,19 @@ bool Sort::isSorted(const std::vector<int> &list)
 // This is the biggest issue and takes the 98.6% of the time
 unsigned int Sort::pos_of(std::vector<int> &list, int goal)
 {
+	gettimeofday(&g_last_stamp, 0);
 	unsigned int end = list.size();
 	unsigned int i = 0;
 	
 	for (; i < end; i++)
 	{
 		if (list[i] == goal)
+		{
+			logTime(&g_searchtime);
 			return (i);
+		}
 	}
+	logTime(&g_searchtime);
 	return (0);
 }
 
@@ -125,23 +150,35 @@ std::vector<int> Sort::readjust_list(std::vector<int> &list, std::vector<int> &s
 	// Go through all sorted numbers
 	int end = sort.size();
 	index = pos_of(list, sort[0]);
-	newer.push_back(list[index - 1]);
-	newer.push_back(list[index]);
+	gettimeofday(&g_last_stamp, 0);
+		newer.push_back(list[index - 1]);
+		newer.push_back(list[index]);
+	logTime(&g_pbacktime);
 	int i = 1;
 	for (; i < end; i++)
 	{
 		// Get the current number from sort and its position in list
 		index = pos_of(list, sort[i]);
-		newer.push_back(list[index - 1]);
-		insert(newer.size() - 1, 0, newer.size() - 2, newer);
-		newer.push_back(list[index]);
+		gettimeofday(&g_last_stamp, 0);
+			newer.push_back(list[index - 1]);
+		logTime(&g_pbacktime);
+		gettimeofday(&g_last_stamp, 0);
+			insert(newer.size() - 1, 0, newer.size() - 2, newer);
+		logTime(&g_insertime);
+		gettimeofday(&g_last_stamp, 0);
+			newer.push_back(list[index]);
+		logTime(&g_pbacktime);
 	}
 	i = newer.size();
 	// Insert the rest of the unsorted numbers
 	for (; i < (int)list.size(); i++)
 	{
-		newer.push_back(list[i]);
-		insert(newer.size() - 1, 0, newer.size() - 2, newer);
+		gettimeofday(&g_last_stamp, 0);
+			newer.push_back(list[i]);
+		logTime(&g_pbacktime);
+		gettimeofday(&g_last_stamp, 0);
+			insert(newer.size() - 1, 0, newer.size() - 2, newer);
+		logTime(&g_insertime);
 	}
 	return (newer);
 }

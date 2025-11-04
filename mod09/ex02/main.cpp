@@ -1,4 +1,4 @@
-#include "SortVector1.hpp"
+#include "SortVector2.hpp"
 #include <sys/time.h>
 #include <iostream>
 
@@ -10,6 +10,12 @@
 
 // Good Containers:
 // multiset / set -> Does not use merge-insert sort?
+
+double g_searchtime = 0.0;
+double g_insertime = 0.0;
+double g_pbacktime = 0.0;
+double g_swaptime = 0.0;
+struct timeval g_last_stamp;
 
 void print_duration(timeval present, timeval past)
 {
@@ -33,13 +39,22 @@ void test_result(const std::string &line, const timeval &past)
 	gettimeofday(&present, 0);
 	std::cout << line << std::endl;
 	print_duration(present, past);
+	std::cout << "Swapped for          " << g_swaptime << std::endl;
+	std::cout << "Inserted for         " << g_insertime << std::endl;
+	std::cout << "Pushed back for      " << g_pbacktime << std::endl;
+	std::cout << "Searched pos_of for  " << g_searchtime << std::endl;
 }
 
 int main(void)
 {
 	struct timeval past;
 	std::vector<int> vec;
-	for (int i = 150000; i >= 0; i--)
+	(void)g_searchtime;
+	(void)g_insertime;
+	(void)g_pbacktime;
+	(void)g_swaptime;
+	(void)g_last_stamp;
+	for (int i = 20000; i >= 0; i--)
 		vec.push_back(i);
 	gettimeofday(&past, 0);
 	Sort::merge_sort(vec);

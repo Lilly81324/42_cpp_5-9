@@ -5,9 +5,19 @@
 #include <utility>
 #include <deque>
 
+extern double g_searchtime;
+extern double g_insertime;
+extern double g_pbacktime;
+extern double g_swaptime;
+extern struct timeval g_last_stamp;
+
 /**
  * Stat sheet:
- * Twice as fast
+ * 20000	= 	  .26s
+ * 40000	=	 1.00s
+ * 80000	=	 4.09s
+ * 100000	=	 6.32s
+ * 150000	=	14.30s
  */
 class Sort
 {
@@ -27,10 +37,10 @@ class Sort
 		static void recur(std::vector<int> &list, std::vector<int> &cpy);
 
 		// O(n)
-		static std::pair<int, int> pos_of(std::vector<std::pair<int, int> > &list, int goal);
+		static unsigned int pos_of(std::vector<int> &list, int goal);
 
 		// likely closer to O(n^2), due to calling O(n) n times
-		static std::vector<int> readjust_list(std::vector<int> &list, std::vector<int> &sort, std::vector<std::pair<int, int> > &pairs);
+		static std::vector<int> readjust_list(std::vector<int> &list, std::vector<int> &sort);
 
 	public:
 		static void merge_sort(std::vector<int> &list);

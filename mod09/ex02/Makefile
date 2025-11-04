@@ -5,7 +5,7 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 OBJ_DIR = ./obj/
 
-SRC = SortVector1.cpp main.cpp
+SRC = SortVector2.cpp main.cpp
 RAW = $(SRC:%.cpp=%.o)
 OBJ = $(addprefix $(OBJ_DIR), $(RAW))
 

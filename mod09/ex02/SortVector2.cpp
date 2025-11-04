@@ -1,5 +1,5 @@
 
-# include "SortVector1.hpp"
+# include "SortVector2.hpp"
 
 /**
  * @brief Puts the number from <pos> left, to <to>, shifting the rest right
@@ -101,55 +101,46 @@ bool Sort::isSorted(const std::vector<int> &list)
 	return (true);
 }
 
-unsigned int Sort::pos_of(std::vector<int> &list, int goal)
+// This is the biggest issue and takes the 98.6% of the time
+std::pair<int, int> Sort::pos_of(std::vector<std::pair<int, int> > &list, int goal)
 {
 	unsigned int end = list.size();
 	unsigned int i = 0;
 	
 	for (; i < end; i++)
 	{
-		if (list[i] == goal)
-			return (i);
+		if (list[i].second == goal)
+			return (list[i]);
 	}
-	return (0);
+	return (list[0]);
 }
 
-std::vector<int> Sort::readjust_list(std::vector<int> &list, std::vector<int> &sort)
+std::vector<int> Sort::readjust_list(std::vector<int> &list, std::vector<int> &sort, std::vector<std::pair<int, int> > &pairs)
 {
 	std::vector<int> newer;
 	newer.clear();
 	newer.reserve(list.size());
-	unsigned int index;
-	std::vector<int>::iterator it;
-	std::vector<int>::iterator it2;
+	std::pair<int, int> entry;
 
 	// Go through all sorted numbers
 	int end = sort.size();
-	index = pos_of(list, sort[0]);
-	newer.push_back(list[index - 1]);
-	newer.push_back(list[index]);
-	it = list.begin() + index - 1;
-	it2 = list.begin() + index;
-	list.erase(it2);
-	list.erase(it);
+	entry = pos_of(pairs, sort[0]);
+	newer.push_back(entry.first);
+	newer.push_back(entry.second);
 	int i = 1;
 	for (; i < end; i++)
 	{
 		// Get the current number from sort and its position in list
-		index = pos_of(list, sort[i]);
-		newer.push_back(list[index - 1]);
+		entry = pos_of(pairs, sort[i]);
+		newer.push_back(entry.first);
 		insert(newer.size() - 1, 0, newer.size() - 2, newer);
-		newer.push_back(list[index]);
-		it = list.begin() + index - 1;
-		it2 = list.begin() + index;
-		list.erase(it2);
-		list.erase(it);
+		newer.push_back(entry.second);
 	}
 	i = newer.size();
 	// Insert the rest of the unsorted numbers
-	if (list.size() > 0)
+	for (; i < (int)list.size(); i++)
 	{
-		newer.push_back(*list.begin());
+		newer.push_back(list[i]);
 		insert(newer.size() - 1, 0, newer.size() - 2, newer);
 	}
 	return (newer);
@@ -158,15 +149,19 @@ std::vector<int> Sort::readjust_list(std::vector<int> &list, std::vector<int> &s
 void Sort::merge_sort(std::vector<int> &list)
 {
 	std::vector<int> sort;
+	std::vector<std::pair<int, int> > pairs;
 
-	// if (isSorted(list))
-	// 	return ; 		-> minimal effect
-	sortPairs(list);
-	// if (isSorted(list))		-> minimal effect
-	if (list.size() <= 2)
+	if (isSorted(list))
 		return ;
+	sortPairs(list);
+	if (isSorted(list))
+		return ;
+	for (int i = 0; i + 1 < (int)list.size(); i += 2)
+	{
+		pairs.push_back(std::pair<int, int>(list[i], list[i + 1]));
+	}
 	recur(list, sort);
-	list = readjust_list(list, sort);
+	list = readjust_list(list, sort, pairs);
 }
 
 // Things we need to do:

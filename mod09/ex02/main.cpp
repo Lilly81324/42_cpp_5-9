@@ -1,4 +1,4 @@
-#include "DequeSort1.hpp"
+#include "SortVector1.hpp"
 #include <sys/time.h>
 #include <iostream>
 
@@ -38,12 +38,12 @@ void test_result(const std::string &line, const timeval &past)
 int main(void)
 {
 	struct timeval past;
-	std::deque<int> vec;
-	for (int i = 30000; i >= 0; i--)
+	std::vector<int> vec;
+	for (int i = 150000; i >= 0; i--)
 		vec.push_back(i);
 	gettimeofday(&past, 0);
-	DequeSort::merge_sort(vec);
-	if (!DequeSort::isSorted(vec))
+	Sort::merge_sort(vec);
+	if (!Sort::isSorted(vec))
 		std::cout << "Not sorted! Failure!" << std::endl;
 	test_result("DequeSort1", past);
 	return 0;

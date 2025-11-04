@@ -1,5 +1,5 @@
 
-# include "DequeSort1.hpp"
+# include "SortVector1.hpp"
 
 /**
  * @brief Puts the number from <pos> left, to <to>, shifting the rest right
@@ -7,7 +7,7 @@
  * @param to Index of the position to move <pos> to
  * @note If <position> is left of <to>, or exceeds list size, nothing happens
  */
-void DequeSort::push_before(int pos, int to, std::deque<int> &list)
+void Sort::push_before(int pos, int to, std::vector<int> &list)
 {
 	// This code is redundant, because you should never call this with bad input!
 	if (pos <= to || pos > (int)list.size() - 1)
@@ -25,7 +25,7 @@ void DequeSort::push_before(int pos, int to, std::deque<int> &list)
 /**
  * Use swap(list[i], list[i + 1])
  */
-void	DequeSort::ft_swap(int &pos1, int &pos2)
+void	Sort::ft_swap(int &pos1, int &pos2)
 {
 	int temp;
 	temp = pos1;
@@ -35,7 +35,7 @@ void	DequeSort::ft_swap(int &pos1, int &pos2)
 
 /**
  * @brief Insert number from array into a sorted range
- * @param num is the number to add
+ * @param pos is the position of the number in the array, that you want to insert/move
  * @param from is the index of the start of the sorted range (inclusive)
  * @param to is the index of the end of the sorted range (inclusive)
  * @param list is the array/list to service
@@ -43,34 +43,31 @@ void	DequeSort::ft_swap(int &pos1, int &pos2)
  * @warning <pos>, <to> and <from> have to be valid indices in list
  * @warning <pos> > to >= from
  */
-void DequeSort::insert(int num, unsigned int from, unsigned int to, std::deque<int> &list)
+void Sort::insert(unsigned int pos, unsigned int from, unsigned int to, std::vector<int> &list)
 {
 	unsigned int mid = (from + to) / 2;
 	// Position found
 	if (to - from <= 1)
 	{
 		// if before start, push to start
-		std::deque<int>::iterator it = list.begin();
-		if (num < list[from])
-			list.insert(it + from, num);
+		if (list[pos] < list[from])
+			push_before(pos, from, list);
 		// if before end, push to end
-		else if (num < list[to])
-			list.insert(it + to, num);
+		else if (list[pos] < list[to])
+			push_before(pos, to, list);
 		// bigger then end, push just after end
 		else
-			list.insert(it + to + 1, num);
+			push_before(pos, to + 1, list);
 			// this could in theory exceed the limit, but in practice, should never
 	}
 	// Element has to go in left half
-	else if (list[mid] > num)
-		insert(num, from, mid, list);
+	else if (list[mid] > list[pos])
+		insert(pos, from, mid, list);
 	else
-		insert(num, mid, to, list);
+		insert(pos, mid, to, list);
 }
 
-// O(n) unavoidable, unless different algorithm used
-// Use merge_sort maybe?
-void DequeSort::sortPairs(std::deque<int> &list)
+void Sort::sortPairs(std::vector<int> &list)
 {
 	unsigned int size = list.size();
 	for (unsigned int i = 0; i + 1 < size; i += 2)
@@ -80,7 +77,7 @@ void DequeSort::sortPairs(std::deque<int> &list)
 	}
 }
 
-void DequeSort::recur(std::deque<int> &list, std::deque<int> &cpy)
+void Sort::recur(std::vector<int> &list, std::vector<int> &cpy)
 {
 	// Make list of every odd position
 	unsigned int end = list.size();
@@ -89,25 +86,22 @@ void DequeSort::recur(std::deque<int> &list, std::deque<int> &cpy)
 	merge_sort(cpy);
 }
 
-// O(n) minimize calling this!
-bool DequeSort::isSorted(const std::deque<int> &list)
+bool Sort::isSorted(const std::vector<int> &list)
 {
-	std::deque<int>::const_iterator it = list.begin();
-	std::deque<int>::const_iterator next = list.begin();
-	std::deque<int>::const_iterator end = list.end();
-	if (next != end)
-		next++;
+	std::vector<int>::const_iterator it = list.begin();
+	std::vector<int>::const_iterator next = list.begin();
+	std::vector<int>::const_iterator end = list.end();
 
 	for (; next != end; next++)
 	{
-		if (*it >= *next)
+		if (*it > *next)
 			return (false);
 		it = next;
 	}
 	return (true);
 }
 
-unsigned int DequeSort::pos_of(std::deque<int> &list, int goal)
+unsigned int Sort::pos_of(std::vector<int> &list, int goal)
 {
 	unsigned int end = list.size();
 	unsigned int i = 0;
@@ -120,10 +114,11 @@ unsigned int DequeSort::pos_of(std::deque<int> &list, int goal)
 	return (0);
 }
 
-std::deque<int> DequeSort::readjust_list(std::deque<int> &list, std::deque<int> &sort)
+std::vector<int> Sort::readjust_list(std::vector<int> &list, std::vector<int> &sort)
 {
-	std::deque<int> newer;
+	std::vector<int> newer;
 	newer.clear();
+	newer.reserve(list.size());
 	unsigned int index;
 
 	// Go through all sorted numbers
@@ -136,23 +131,25 @@ std::deque<int> DequeSort::readjust_list(std::deque<int> &list, std::deque<int> 
 	{
 		// Get the current number from sort and its position in list
 		index = pos_of(list, sort[i]);
-		insert(list[index - 1], 0, newer.size() - 1, newer);
+		newer.push_back(list[index - 1]);
+		insert(newer.size() - 1, 0, newer.size() - 2, newer);
 		newer.push_back(list[index]);
 	}
 	i = newer.size();
 	// Insert the rest of the unsorted numbers
 	for (; i < (int)list.size(); i++)
 	{
-		insert(list[i], 0, newer.size() - 1, newer);
+		newer.push_back(list[i]);
+		insert(newer.size() - 1, 0, newer.size() - 2, newer);
 	}
 	return (newer);
 }
 
-void DequeSort::merge_sort(std::deque<int> &list)
+void Sort::merge_sort(std::vector<int> &list)
 {
-	if (list.size() <= 2)
-		return (sortPairs(list));
-	std::deque<int> sort;
+	if (isSorted(list))
+		return ;
+	std::vector<int> sort;
 	sortPairs(list);
 	if (isSorted(list))
 		return ;

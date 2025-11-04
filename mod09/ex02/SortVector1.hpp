@@ -13,7 +13,7 @@
  * 100000	=	 6.32s
  * 150000	=	14.30s
  */
-class VectorSort
+class Sort
 {
 	private:
 		// O(n)

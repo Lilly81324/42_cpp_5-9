@@ -14,11 +14,9 @@
  * 30000	=	15.11s
  * Result = wow, this is garbage
  */
-class DequeSort
+class Sort
 {
 	private:
-		// O(n)
-		static void push_before(int pos, int to, std::deque<int> &list);
 
 		static void	ft_swap(int &pos1, int &pos2);
 

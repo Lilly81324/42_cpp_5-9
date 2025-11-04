@@ -5,7 +5,7 @@ CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 OBJ_DIR = ./obj/
 
-SRC = DequeSort1.cpp main.cpp
+SRC = SortVector1.cpp main.cpp
 RAW = $(SRC:%.cpp=%.o)
 OBJ = $(addprefix $(OBJ_DIR), $(RAW))
 

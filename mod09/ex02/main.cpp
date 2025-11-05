@@ -1,23 +1,11 @@
-#include "SortList1.hpp"
+#include "PmergeMe.hpp"
 #include <sys/time.h>
 #include <iostream>
+#include <iomanip>
 
-// Must use merge-insert algorythm to sort uints
+// Uses vector, list, pair (optional)
 
-// Handle at least 3000 elements
-
-// Use 2 containers to sort the numbers
-
-// Good Containers:
-// multiset / set -> Does not use merge-insert sort?
-
-double g_searchtime = 0.0;
-double g_insertime = 0.0;
-double g_pbacktime = 0.0;
-double g_swaptime = 0.0;
-struct timeval g_last_stamp;
-
-void print_duration(timeval present, timeval past)
+void print_duration(const timeval &past, const timeval &present)
 {
 	long s = present.tv_sec - past.tv_sec;
 	long micros = present.tv_usec - past.tv_usec;
@@ -28,120 +16,28 @@ void print_duration(timeval present, timeval past)
 		s -= 1;
 	}
 
-	std::cout << "Time passed: " << s << " seconds, " << micros << " microseconds (" \
-		<< ((double)s + ((double)micros / (double)1000000)) << "s)" << std::endl;
+	std::cout << std::fixed << std::setprecision(5) << std::setw(9) << ((double)s + ((double)micros / (double)1000000)) << " us (" << \
+	s << " s, " << micros << " us)" << std::endl;
 }
 
-
-void test_result(const std::string &line, const timeval &past)
+void test_result(int contSize, const std::string &contType, timeval &past, timeval &present)
 {
-	struct timeval present;
-	gettimeofday(&present, 0);
-	std::cout << line << std::endl;
-	print_duration(present, past);
-	std::cout << "Swapped for          " << g_swaptime << std::endl;
-	std::cout << "Inserted for         " << g_insertime << std::endl;
-	std::cout << "Pushed back for      " << g_pbacktime << std::endl;
-	std::cout << "Searched pos_of for  " << g_searchtime << std::endl;
+	std::cout << "Time to process a range of " << std::setw(6) << contSize << " elements with ";
+	std::cout << contType << " : ";
+	print_duration(past, present);
 }
 
-int main(void)
+template<typename T>
+bool isSorted(T list)
 {
-	struct timeval past;
-	std::vector<int> vec;
-	(void)g_searchtime;
-	(void)g_insertime;
-	(void)g_pbacktime;
-	(void)g_swaptime;
-	(void)g_last_stamp;
-	for (int i = 40000; i >= 0; i--)
-		vec.push_back(i);
-	gettimeofday(&past, 0);
-	VectorSort::merge_sort(vec);
-	if (!Sort::isSorted(vec))
-		std::cout << "Not sorted! Failure!" << std::endl;
-	test_result("DequeSort1", past);
-	return 0;
-}
-
-
-// Sucks ass, because its O(n) unlike Random access
-void ListSort::insert(int num, std::list<int>::iterator to, std::list<int> &list)
-{
-	std::list<int>::iterator from = list.begin();
-	if (num < *from)
-	{
-		list.push_front(num);
-		return ;
-	}
-	else if (num > *to)
-	{
-		list.push_back(num);
-		return ;
-	}
-	while (*from < num && *to > num)
-	{
-		from++;
-		to--;
-	}
-	if (*from > num)
-		list.insert(from, num);
-	else // if (*to < num)
-	{
-		to++;
-		list.insert(to, num);
-	}
-}
-
-void ListSort::sortPairs(std::list<int> &list)
-{
-	std::list<int>::iterator it = list.begin();
-	std::list<int>::iterator next = list.begin();
-	std::list<int>::iterator end = list.end();
-	int temp;
-
-	if (next != end)
-		next++;
-	while ( it != end && next != end)
-	{
-
-		if (*it > *next)
-		{
-			temp = *it;
-			*it = *next;
-			*next = temp;
-		}
-		jump2(it);
-		jump2(next);
-	}
-}
-
-void ListSort::recur(std::list<int> &list, std::list<int> &cpy)
-{
-	std::list<int>::const_iterator it = list.begin();
-	std::list<int>::const_iterator next = list.begin();
-	std::list<int>::const_iterator end = list.end();
-
-	if (next != end)
-		next++;
-	// Make list of every odd position
-	while (it != end && next != end)
-	{
-		cpy.push_back(*next);
-		jump2(it);
-		jump2(next);
-	}
-	merge_sort(cpy);
-}
-
-bool ListSort::isSorted(const std::list<int> &list)
-{
-	std::list<int>::const_iterator it = list.begin();
-	std::list<int>::const_iterator next = list.begin();
-	std::list<int>::const_iterator end = list.end();
+	typename T::const_iterator it = list.begin();
+	typename T::const_iterator next = list.begin();
+	typename T::const_iterator end = list.end();
 	if (next != end)
 		next++;
 
+	// if odd, next = end
+	// if even, oob
 	for (; next != end; next++)
 	{
 		if (*it > *next)
@@ -151,128 +47,157 @@ bool ListSort::isSorted(const std::list<int> &list)
 	return (true);
 }
 
-// Get the index to the lowest number in our list, for the specified bigger element
-std::list<int>::iterator ListSort::pos_of(std::list<int> &list, int goal)
+template<typename T>
+void printContainer(T list)
 {
-	std::list<int>::iterator it = list.begin();
-	std::list<int>::iterator next = list.begin();
-	std::list<int>::iterator end = list.end();
+	typename T::const_iterator it = list.begin();
+	typename T::const_iterator end = list.end();
 
-	if (next != end)
-		next++;
-	// Check every odd position
-	while (it != end && next != end)
+	if (it != end)
 	{
-		if (*next == goal)
-			return (it);
-		jump2(it);
-		jump2(next);
+		std::cout << *it;
+		it++;
 	}
-	return (list.end());
+	for (; it != end; it++)
+		std::cout << " " << *it;
 }
 
-// Instead of making a new list, readjust the old one?
-// remove used elements from old list?
-// This: Make new list, keep old elements
-std::list<int> ListSort::readjust_list(std::list<int> &list, std::list<int> &sort)
+bool addNumber(int &num, std::list<int> &lst, std::set<int> &unique)
 {
-	std::list<int> newer;
-	std::list<int>::iterator lower;
-	std::list<int>::iterator newer_pos;
-	std::list<int>::iterator sort_pos;
+	std::pair<std::set<int>::iterator, bool> res;
 
-	// First numer in sort -> Find it in list -> Find its child -> Add them to new
-	sort_pos = sort.begin();
-	lower = pos_of(list, *(sort_pos));
-	newer.push_back(*lower);
-	lower++;
-	newer.push_back(*lower);
-	sort_pos++;
-
-	newer_pos = newer.end();
-	newer_pos--;
-	// Go through each number in sort, repeat the steps above with it
-	for (; sort_pos != sort.end(); sort_pos++)
-	{
-		// Get the current number from sort and its position in list
-		lower = pos_of(list, *(sort_pos));
-		insert(*lower, newer_pos, newer);
- 		lower++;
-		newer.push_back(*lower);
-		newer_pos++;
-		newer_pos++;
-	}
-
-	// Insert the rest of the unsorted numbers
-	if (newer.size() < list.size())
-	{
-		std::list<int>::iterator l_end = list.end();
-		l_end--;
-		insert(*l_end, newer_pos, newer);
-	}
-	return (newer);
+	if (num == -1)
+		return (true);
+	res = unique.insert(num);
+	if (*(res.first) != num || res.second == false)
+		return (false);
+	lst.push_back(num);
+	num = -1;
+	return (true);
 }
 
-void ListSort::merge_sort(std::list<int> &list)
+bool makeListPart(const char *input, std::list<int> &lst, std::set<int> &unique, std::string &errMsg)
 {
-	std::list<int> sort;
+	int curNum = -1;
+	char cur;
 
-	if (isSorted(list))
-		return ;
-	sortPairs(list);
-	if (isSorted(list))
-		return ;
-	recur(list, sort);
-	list = readjust_list(list, sort);
+	if (input == NULL)
+		return (true);
+	for (int i = 0; input[i] != '\0'; i++)
+	{
+		cur = input[i];
+		// if digit, add it to current number
+		if (isdigit(cur))
+		{
+			if (curNum == -1)
+				curNum = 0;
+			curNum *= 10;
+			curNum += (cur - '0');
+		}
+		// If space and number exists, try to add it
+		else if (isspace(cur))
+		{
+			// If number is not unique
+			if (!addNumber(curNum, lst, unique))
+			{
+				errMsg = "Error: No duplicates allowed";
+				return (false);
+			}
+		}
+		// If other char, return error
+		else
+		{
+			// Special case for neg numbers
+			errMsg = "Error: Only numbers as argument, found ";
+			errMsg += cur;
+			if (cur == '-')
+				errMsg = "Error: Only positive numbers";
+			return (false);
+		}
+	}
+	// If number is not unique
+	if (!addNumber(curNum, lst, unique))
+	{
+		errMsg = "Error: No duplicates allowed";
+		return (false);
+	}
+	return (true);
 }
 
+int main(int argc, char **argv)
+{
+	// Main Containers
+	std::vector<int> vec;
+	std::list<int> lst;
 
-// Compare everything in pairs
-// Swap, so larger is second
-// Sort the larger elements
+	// For verifying no doubles
+	std::set<int> unique;
 
-// 1 9 3 5 7 4
-// 1 9 | 3 5 | 7 4
-// 1 9 | 3 5 | 4 7
-// 9 5 7
-// 9 5 | 7
-// 5 9 | 7
-// 5 7 9
-// 1  5  3  7  4  9
-// b1 a1 b2 a2 b3 a3
+	// For copying the list into vector
+	std::list<int>::iterator it;
+	std::list<int>::iterator end;
 
-// insert b3 in b1, a1,a2
-
-// 1 5 7 insert 4
-// 1 4 5 7
-
-// insert b2 at left of a2
-
-// 1 4 5 7 3 4 9
-// 1 3 4 5 7 9
+	// For outputting
+	std::string errMsg;
+	struct timeval pastVec;
+	struct timeval presentVec;
+	struct timeval pastLst;
+	struct timeval presentLst;
 
 
-// If odd length, ignore last element until end
-// 1) Compare and sort each pair (pos0 and pos1, pos2 and pos3, etc.)
-// 2) Call Merge Insertion Sort on every second element (bigger one)
-// The first two elements will now be sorted
-// Create Variable UnEl = Index of the first unsorted element, which is now 2
-// 3) Use *Insertion* to insert number in the elements before UnEl (0, 1, 2)
-// This will move UnEl by 1
-// 4) Insert UnEl + 2 in the chain before UnEl
-// This will move Unel by 1 + 2
-// Repeat once more
-// 
-// 5) Compare pos10 to pos4, then either pos2 or pos4, then either pos1, pos3 or pos5
-// 6) Do the same for what used to be pos7
-// 7) Insert any stragglers
+	// Argc check
+	if (argc < 2)
+	{
+		std::cerr << "Error: No Arguments given" << std::endl;
+		return (1);
+	}
 
-// Insertion:
-// Get middlemost position
-// Compare current element to it
-// "Cut" list in half, at the middle (inclusive)
-// Repeat insertion in this new halfed list
+	// For all arguments
+	for (int i = 1; i < argc; i++)
+	{
+		if (makeListPart(argv[i], lst, unique, errMsg) == false)
+		{
+			std::cerr << errMsg << std::endl;
+			return (1);
+		}
+	}
 
-// We have a sorted tail (left) of numbers
-// This tail goes from the leftmost position (start)
-// to the end of
+	// Copy finished list into vector
+	it = lst.begin();
+	end = lst.end();
+	for (; it != end; it++)
+		vec.push_back(*it);
+
+	// First line
+	std::cout << "Before:            " ;
+	printContainer(vec);
+	std::cout << std::endl;
+
+	// Sorting
+	gettimeofday(&pastVec, 0);
+	VectorSort::merge_sort(vec);
+	gettimeofday(&presentVec, 0);	
+	gettimeofday(&pastLst, 0);
+	ListSort::merge_sort(lst);
+	gettimeofday(&presentLst, 0);
+
+	// Checking for sorted
+	if (!isSorted(vec) || !isSorted(lst))
+	{
+		std::cerr << "Sorting failed. This is a failed Evaluation" << std::endl;
+		return (1);
+	}
+
+	// Second line
+	std::cout << "Afer:              " ;
+	printContainer(vec);
+	std::cout << std::endl;
+
+	// Third line
+	test_result(vec.size(), "std::vector<int>", pastVec, presentVec);
+
+	// Fourth line
+	test_result(lst.size(), "std::list<int>  ", pastLst, presentLst);
+
+	return (0);
+}

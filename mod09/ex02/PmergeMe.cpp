@@ -1,9 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/05 13:38:11 by sikunne           #+#    #+#             */
+/*   Updated: 2025/11/05 14:22:44 by sikunne          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# include "SortVector2.hpp"
+#include "PmergeMe.hpp"
 
-/**
- * Use swap(list[i], list[i + 1])
- */
 void	ft_swap(int &pos1, int &pos2)
 {
 	int temp;
@@ -12,12 +20,18 @@ void	ft_swap(int &pos1, int &pos2)
 	pos2 = temp;
 }
 
-/**
- * @brief Puts the number from <pos> left, to <to>, shifting the rest right
- * @param pos Index of the number to move, last position to be shifted
- * @param to Index of the position to move <pos> to
- * @note If <position> is left of <to>, or exceeds list size, nothing happens
- */
+void jump2(std::list<int>::const_iterator &it)
+{
+	it++;
+	it++;
+}
+
+void jump2(std::list<int>::iterator &it)
+{
+	it++;
+	it++;
+}
+
 void VectorSort::push_before(int pos, int to, std::vector<int> &list)
 {
 	// This code is redundant, because you should never call this with bad input!

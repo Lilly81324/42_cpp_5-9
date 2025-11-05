@@ -14,7 +14,7 @@
  * 43000	=	 6.32s
  * 65000	=	14.30s
  */
-class Sort
+class ListSort
 {
 	private:
 		// O(n)

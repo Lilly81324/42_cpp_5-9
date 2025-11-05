@@ -7,9 +7,13 @@
 
 /**
  * Stat sheet:
- * Twice as fast
+ * 20000	= 	  .13s
+ * 40000	=	  .50s
+ * 80000	=	 2.05ss
+ * 100000	=	 3.16s
+ * 150000	=	 7.15s
  */
-class Sort
+class VectorSort
 {
 	private:
 		// O(n)

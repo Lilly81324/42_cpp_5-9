@@ -2,7 +2,7 @@
 # include "SortList1.hpp"
 
 // Sucks ass, because its O(n) unlike Random access
-void Sort::insert(int num, std::list<int>::iterator to, std::list<int> &list)
+void ListSort::insert(int num, std::list<int>::iterator to, std::list<int> &list)
 {
 	std::list<int>::iterator from = list.begin();
 	if (num < *from)
@@ -29,19 +29,7 @@ void Sort::insert(int num, std::list<int>::iterator to, std::list<int> &list)
 	}
 }
 
-void jump2(std::list<int>::const_iterator &it)
-{
-	it++;
-	it++;
-}
-
-void jump2(std::list<int>::iterator &it)
-{
-	it++;
-	it++;
-}
-
-void Sort::sortPairs(std::list<int> &list)
+void ListSort::sortPairs(std::list<int> &list)
 {
 	std::list<int>::iterator it = list.begin();
 	std::list<int>::iterator next = list.begin();
@@ -64,7 +52,7 @@ void Sort::sortPairs(std::list<int> &list)
 	}
 }
 
-void Sort::recur(std::list<int> &list, std::list<int> &cpy)
+void ListSort::recur(std::list<int> &list, std::list<int> &cpy)
 {
 	std::list<int>::const_iterator it = list.begin();
 	std::list<int>::const_iterator next = list.begin();
@@ -82,7 +70,7 @@ void Sort::recur(std::list<int> &list, std::list<int> &cpy)
 	merge_sort(cpy);
 }
 
-bool Sort::isSorted(const std::list<int> &list)
+bool ListSort::isSorted(const std::list<int> &list)
 {
 	std::list<int>::const_iterator it = list.begin();
 	std::list<int>::const_iterator next = list.begin();
@@ -100,7 +88,7 @@ bool Sort::isSorted(const std::list<int> &list)
 }
 
 // Get the index to the lowest number in our list, for the specified bigger element
-std::list<int>::iterator Sort::pos_of(std::list<int> &list, int goal)
+std::list<int>::iterator ListSort::pos_of(std::list<int> &list, int goal)
 {
 	std::list<int>::iterator it = list.begin();
 	std::list<int>::iterator next = list.begin();
@@ -122,7 +110,7 @@ std::list<int>::iterator Sort::pos_of(std::list<int> &list, int goal)
 // Instead of making a new list, readjust the old one?
 // remove used elements from old list?
 // This: Make new list, keep old elements
-std::list<int> Sort::readjust_list(std::list<int> &list, std::list<int> &sort)
+std::list<int> ListSort::readjust_list(std::list<int> &list, std::list<int> &sort)
 {
 	std::list<int> newer;
 	std::list<int>::iterator lower;
@@ -161,7 +149,7 @@ std::list<int> Sort::readjust_list(std::list<int> &list, std::list<int> &sort)
 	return (newer);
 }
 
-void Sort::merge_sort(std::list<int> &list)
+void ListSort::merge_sort(std::list<int> &list)
 {
 	std::list<int> sort;
 

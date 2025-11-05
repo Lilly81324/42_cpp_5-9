@@ -6,13 +6,19 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:38:48 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/05 18:37:34 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/05 18:59:57 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
+// for main
+#include <sys/time.h>
+#include <iostream>
+#include <iomanip>
+
+// for containers needed
 #include <vector>
 #include <list>
 #include <set>

@@ -1,5 +1,5 @@
 NAME = PmergeMe
-TARGET = ""
+TARGET = 2 18 45 13 62 27 30 7 17 75 58 98 37 84 28 65 77 61 3 31 91 41 11 46 22 51 72 8 90 24
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g

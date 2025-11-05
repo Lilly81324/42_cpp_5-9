@@ -1,9 +1,6 @@
 #include "PmergeMe.hpp"
-#include <sys/time.h>
-#include <iostream>
-#include <iomanip>
 
-// Uses vector, list, pair (optional)
+// Uses vector, list, set, pair (optional)
 
 void print_duration(const timeval &past, const timeval &present)
 {
@@ -16,7 +13,7 @@ void print_duration(const timeval &past, const timeval &present)
 		s -= 1;
 	}
 
-	std::cout << std::fixed << std::setprecision(5) << std::setw(9) << ((double)s + ((double)micros / (double)1000000)) << " us (" << \
+	std::cout << std::fixed << std::setprecision(5) << std::setw(9) << ((double)s + ((double)micros / (double)1000000)) << " s (" << \
 	s << " s, " << micros << " us)" << std::endl;
 }
 

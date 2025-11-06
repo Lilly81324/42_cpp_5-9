@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:38:48 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/05 18:59:57 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/06 14:14:32 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ class VectorSort
 		 * @param goal Larger element to search for
 		 * @returns Pair containing the specified larger element
 		 */
-		static std::pair<int, int> pos_of(std::vector<std::pair<int, int> > &list, int goal);
+		static int pos_of(std::vector<int> &list, int goal);
 
 		/**
 		 * @brief Create a new list based off the given pairs sorted by sort with the rest of list
@@ -82,7 +82,7 @@ class VectorSort
 		 * @param pairs All full pairs of elements in unsorted numbers
 		 * @returns a fully sorted vector of all that is inside list
 		 */
-		static std::vector<int> readjust_list(std::vector<int> &list, std::vector<int> &sort, std::vector<std::pair<int, int> > &pairs);
+		static std::vector<int> readjust_list(std::vector<int> &list, std::vector<int> &sort);
 
 	public:
 		/**

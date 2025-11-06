@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:38:11 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/05 18:39:46 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/06 14:14:05 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,16 @@ void ListSort::insert(int num, std::list<int>::iterator to, std::list<int> &list
 }
 
 // This is the biggest issue and takes the 98.6% of the time (outdated and cut in half)
-std::pair<int, int> VectorSort::pos_of(std::vector<std::pair<int, int> > &list, int goal)
+int VectorSort::pos_of(std::vector<int> &list, int goal)
 {
-	unsigned int end = list.size();
-	unsigned int i = 0;
-	
-	for (; i < end; i++)
+	int end = list.size();
+
+	for (int i = 1; i < end; i += 2)
 	{
-		if (list[i].second == goal)
-			return (list[i]);
+		if (list[i] == goal)
+			return (i);
 	}
-	return (list[0]);
+	return (-1);
 }
 
 std::list<int>::iterator ListSort::pos_of(std::list<int> &list, int goal)
@@ -178,25 +177,25 @@ std::list<int>::iterator ListSort::pos_of(std::list<int> &list, int goal)
 	return (list.end());
 }
 
-std::vector<int> VectorSort::readjust_list(std::vector<int> &list, std::vector<int> &sort, std::vector<std::pair<int, int> > &pairs)
+std::vector<int> VectorSort::readjust_list(std::vector<int> &list, std::vector<int> &sort)
 {
 	std::vector<int> newer;
 	newer.reserve(list.size());
-	std::pair<int, int> entry;
+	int index;
 
 	// Go through all sorted numbers
-	entry = pos_of(pairs, sort[0]);
-	newer.push_back(entry.first);
-	newer.push_back(entry.second);
+	index = pos_of(list, sort[0]);
+	newer.push_back(list[index - 1]);
+	newer.push_back(list[index]);
 	int i = 1;
 	int end = sort.size();
 	for (; i < end; i++)
 	{
 		// Get the current number from sort and its position in list
-		entry = pos_of(pairs, sort[i]);
-		newer.push_back(entry.first);
+		index = pos_of(list, sort[i]);
+		newer.push_back(list[index - 1]);
 		insert(newer.size() - 1, 0, newer.size() - 2, newer);
-		newer.push_back(entry.second);
+		newer.push_back(list[index]);
 	}
 	i = newer.size();
 	// Insert the rest of the unsorted numbers
@@ -253,15 +252,12 @@ std::list<int> ListSort::readjust_list(std::list<int> &list, std::list<int> &sor
 void VectorSort::merge_sort(std::vector<int> &list)
 {
 	std::vector<int> sort;
-	std::vector<std::pair<int, int> > pairs;
 
 	sortPairs(list);
 	if (list.size() <= 2)
 		return ;
-	for (int i = 0; i + 1 < (int)list.size(); i += 2)
-		pairs.push_back(std::pair<int, int>(list[i], list[i + 1]));
 	recur(list, sort);
-	list = readjust_list(list, sort, pairs);
+	list = readjust_list(list, sort);
 }
 
 void ListSort::merge_sort(std::list<int> &list)

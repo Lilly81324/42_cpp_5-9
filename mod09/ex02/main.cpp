@@ -13,7 +13,7 @@ void print_duration(const timeval &past, const timeval &present)
 		s -= 1;
 	}
 
-	std::cout << std::fixed << std::setprecision(5) << std::setw(9) << ((double)s + ((double)micros / (double)1000000)) << " s (" << \
+	std::cout << std::fixed << std::setprecision(5) << std::setw(9) << ((double)s + ((double)micros / (double)1000000)) << "s (" << \
 	s << " s, " << micros << " us)" << std::endl;
 }
 
@@ -61,12 +61,9 @@ void printContainer(T list)
 
 bool addNumber(int &num, std::list<int> &lst, std::set<int> &unique)
 {
-	std::pair<std::set<int>::iterator, bool> res;
-
 	if (num == -1)
 		return (true);
-	res = unique.insert(num);
-	if (*(res.first) != num || res.second == false)
+	if (unique.insert(num).second == false)
 		return (false);
 	lst.push_back(num);
 	num = -1;

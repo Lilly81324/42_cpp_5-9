@@ -14,7 +14,7 @@ class Rpn
 		std::stack<int, std::deque<int> > stack;
 	public:
 		void	clear(void);
-		void	operand(int number);
+		bool	operand(int number);
 		bool	operater(char op);
 		int		getResult(std::string &error);
 };

@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 14:29:29 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/06 16:51:14 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/06 17:28:29 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void Rpn::clear(void)
 		this->stack.pop();
 }
 
-void Rpn::operand(int number)
+bool Rpn::operand(int number)
 {
+	if (number >= 10)
+		return (false);
 	this->stack.push(number);
+	return (true);
 }
 
 bool Rpn::operater(char op)
@@ -111,7 +114,13 @@ bool RpnCaller::givenDigit(char c)
 bool RpnCaller::givenSpace(void)
 {
 	if (hasNum)
-		this->rpn.operand(curNum);
+	{
+		if (this->rpn.operand(curNum) == false)
+		{
+			error = "Error: Only numbers below 10 are allowed";
+			return (false);
+		}
+	}
 	else if (lastOperator != '\0')
 	{
 		if (this->rpn.operater(lastOperator) == false)
@@ -177,7 +186,13 @@ int RpnCaller::handle(const char *input)
 
 	// If buffers have stuff left
 	if (hasNum)
-		this->rpn.operand(curNum);
+	{
+		if (this->rpn.operand(curNum) == false)
+		{
+			error = "Error: Only numbers below 10 are allowed";
+			return (0);
+		}
+	}
 	else if (lastOperator != '\0')
 	{
 		if (this->rpn.operater(lastOperator) == false)

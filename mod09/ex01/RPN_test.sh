@@ -40,6 +40,13 @@ valgrind --leak-check=full ./RPN "$CMD" 2>>val.output
 test_count=$((test_count + 1))
 
 
+CMD="10"
+echo
+echo "Number not less then 10, Given: [$CMD]"
+valgrind --leak-check=full ./RPN "$CMD" 2>>val.output
+test_count=$((test_count + 1))
+
+
 CMD="lel"
 echo
 echo "Invalid character, Given: [$CMD]"
@@ -105,7 +112,7 @@ valgrind --leak-check=full ./RPN "$CMD" 2>>val.output
 test_count=$((test_count + 1))
 
 
-CMD="4000 20000 500000 + +"
+CMD="9 9 9 9 9 9 + + + + +"
 echo
 echo "Adding big pos numbers, Given: [$CMD]"
 valgrind --leak-check=full ./RPN "$CMD" 2>>val.output
@@ -144,7 +151,9 @@ valgrind --leak-check=full ./RPN "$CMD" 2>>val.output
 test_count=$((test_count + 1))
 
 
-echo "...----===  Results  ===----..."
+echo "
+...----===  Results  ===----...
+"
 cat val.output | grep "All heap blocks were freed -- no leaks are possible" | wc -l | awk '{printf $0}' 
 echo "/$test_count Tests were leakless"
 

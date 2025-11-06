@@ -2,10 +2,10 @@ NAME = btc
 TARGET = test.txt
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 OBJ_DIR = ./obj/
 
-SRC = main.cpp
+SRC = BitcoinExchange.cpp main.cpp
 RAW = $(SRC:%.cpp=%.o)
 OBJ = $(addprefix $(OBJ_DIR), $(RAW))
 

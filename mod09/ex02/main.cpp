@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
 
-// Uses vector, list, set, pair (optional)
+// Uses vector, list, set
 
 void print_duration(const timeval &past, const timeval &present)
 {

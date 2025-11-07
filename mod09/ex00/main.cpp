@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:56:18 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/06 19:37:01 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 15:41:30 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,22 @@ int main(int argc, char **argv)
 	BitcoinExchange btc;
 	int error;
 
-	if (argc < 2 || argv[1] == NULL)
-		error = btc.parseFile("./data.csv");
+	// Parse database as optional second parameter
+	if (argc < 3 || argv[2] == NULL)
+		error = btc.parseDatabase("./data.csv");
 	else
-		error = btc.parseFile(argv[1]);
-	std::cout << btc << std::endl;
+		error = btc.parseDatabase(argv[2]);
+	if (error)
+		return (0);
 
-	return (error);
+	// Parse input file as first parameter
+	if (argc < 2 || argv[1] == NULL)
+		error = btc.parseInputLine("2025-11-7 | 1");
+	else
+		error = btc.parseInput(argv[1]);
+	if (error)
+		return (0);
+	// std::cout << btc << std::endl;
+
+	return (0);
 }

@@ -2,7 +2,7 @@ NAME = btc
 TARGET = test.txt
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 OBJ_DIR = ./obj/
 
 SRC = BitcoinExchange.cpp main.cpp

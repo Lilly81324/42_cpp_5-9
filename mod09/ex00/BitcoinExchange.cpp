@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:39:55 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 15:44:44 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 18:06:48 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,31 @@
 
 // Local functions: -----------------------------------------------------------
 
+int checkValue(SmartNum &num)
+{
+	if (num.usesInt)
+	{
+		if (num.ival < 0)
+			return (ERR_PARSE_VALUE_TOO_SMOL);
+		if (num.ival > 1000)
+			return (ERR_PARSE_VALUE_TOO_BIG);
+		return (0);
+	}
+	else
+	{
+		if (num.dval < 0.0)
+			return (ERR_PARSE_VALUE_TOO_SMOL);
+		if (num.dval > 1000.0)
+			return (ERR_PARSE_VALUE_TOO_BIG);
+		return (0);
+	}
+}
 
 int parseTime(std::string::size_type &start, char target, const std::string &line, int &result, bool skipSpaces)
 {
 	std::string::size_type pos;
 	std::string::size_type end;
+	double		insurance;
 	std::string substring;
 
 	// Try to find target
@@ -49,7 +69,11 @@ int parseTime(std::string::size_type &start, char target, const std::string &lin
 			return (ERR_PARSE_INVAL_CHAR);
 	
 	// Store result and move cursor after target
-	result = std::atoi(substring.data());
+	insurance = std::atof(substring.data());
+	if (insurance > 2147483647.0)
+		result = 2147483647;
+	else
+		result = std::atoi(substring.data());
 	start = end;
 	return (0);
 }
@@ -57,8 +81,9 @@ int parseTime(std::string::size_type &start, char target, const std::string &lin
 int parseValue(std::string::size_type &start, const std::string &line, SmartNum &result)
 {
 	std::string::size_type dot;
-	std::size_t i = 0;
-	std::string substring;
+	std::size_t	i = 0;
+	std::string	substring;
+	double		insurance;
 
 	// Try to find target
 	dot = line.find('.', start);
@@ -70,7 +95,11 @@ int parseValue(std::string::size_type &start, const std::string &line, SmartNum 
 		for (; i < substring.size(); i++)
 			if (!std::isdigit(substring[i]))
 				return (ERR_PARSE_INVAL_CHAR);
-		result.store(std::atoi(substring.data()));
+		insurance = std::atof(substring.data());
+		if (insurance > 2147483647.0)
+			result = 2147483647;
+		else
+			result = std::atoi(substring.data());
 		return (0);
 	}
 
@@ -97,7 +126,7 @@ int parseValue(std::string::size_type &start, const std::string &line, SmartNum 
 			return (ERR_PARSE_INVAL_CHAR);
 		i++;
 	}
-	result.store(std::atof(substring.data()));
+	result = std::atof(substring.data());
 	return (0);
 }
 
@@ -116,6 +145,17 @@ void Entry::set(int year, int month, int day)
 	this->y = year;
 	this->m = month;
 	this->d = day;
+}
+
+bool Entry::valid(void)
+{
+	if (this->y < 0 || this->y > MAX_YEAR)
+		return (false);
+	if (this->m < 1 || this->m > 12)
+		return (false);
+	if (this->d < 1 || this->d > 31)
+		return (false);
+	return (true);
 }
 
 bool Entry::operator<(const Entry &e) const
@@ -191,18 +231,20 @@ SmartNum::SmartNum(int i): usesInt(true), ival(i), dval(0.0)
 SmartNum::SmartNum(double d): usesInt(false), ival(0), dval(d)
 { }
 
-void SmartNum::store(int i)
+SmartNum &SmartNum::operator=(const int &num)
 {
 	this->usesInt = true;
-	this->ival = i;
 	this->dval = 0.0;
+	this->ival = num;
+	return (*this);
 }
 
-void SmartNum::store(double d)
+SmartNum &SmartNum::operator=(const double &num)
 {
 	this->usesInt = false;
+	this->dval = num;
 	this->ival = 0;
-	this->dval = d;
+	return (*this);
 }
 
 SmartNum &SmartNum::operator=(const SmartNum &num)
@@ -244,6 +286,40 @@ SmartNum SmartNum::operator*(const SmartNum &b)
 // BitcoinExchange Class functions: -------------------------------------------
 
 
+void BitcoinExchange::complain(int error, std::string filetype = "", std::string name = "")
+{
+	switch (error)
+	{
+		case ERR_PARSE_OPEN:
+			std::cout << "Error: " << filetype << " file " << name << " could not be opened" << std::endl;
+			break ;
+		case ERR_PARSE_MISSING_HEAD:
+			std::cout << "Error: " << filetype << " file " << name << " is missing the Header line" << std::endl;
+			break ;
+		case ERR_PARSE_MISSING_SEP:
+			std::cout << "Error: " << filetype << " file entry is missing seperator" << std::endl;
+			break ;
+		case ERR_PARSE_INVAL_CHAR:
+			std::cout << "Error: Invalid character in " << filetype << " file" << std::endl;
+			break ;
+		case ERR_PARSE_GENERIC_SYNTAX:
+			std::cout << "Error: Unspecified Syntax error in " << filetype << " file" << std::endl;
+			break ;
+		case ERR_PARSE_DATE_INVALID:
+			std::cout << "Error: Date in " << filetype << " file is invalid (Y:0-4000, M:1-12, D:1-31)" << std::endl;
+			break ;
+		case ERR_PARSE_VALUE_TOO_SMOL:
+			std::cout << "Error: Value in " << filetype << " must be at least 0 (Look at this looser with negative Bitcoin)" << std::endl;
+			break ;
+		case ERR_PARSE_VALUE_TOO_BIG:
+			std::cout << "Error: Value in " << filetype << " must be at most 1000 (You dont have THAT much Bitcoin, liar)" << std::endl;
+			break ;
+		default:
+			std::cout << "Error: Unknown Error code " << error << " for " << filetype << std::endl;
+			break ;
+	}
+}
+
 SmartNum BitcoinExchange::get(const Entry &e) const
 {
 	std::map<Entry, SmartNum>::const_iterator it = this->lst.begin();
@@ -264,158 +340,113 @@ SmartNum BitcoinExchange::get(const Entry &e) const
 	return (end->second);
 }
 
-int BitcoinExchange::parseDatabaseLine(const std::string &line)
+int	BitcoinExchange::parseLine(const std::string &line, std::string seps, Entry &e, SmartNum &num)
 {
-	int			error;
-	int			year;
-	int			month;
-	int			day;
-	SmartNum	value;
-	std::string::size_type	start;
+	int						error = 0;
+	int						year = 0;
+	int						month = 0;
+	int						day = 0;
+	std::string::size_type	start = 0;
 
 	// Skip empty lines
 	if (line.empty())
-		return (true);
+		return (0);
 
-	// First part is year
-	start = 0;
-	error = parseTime(start, '-', line, year, false);
+	error = parseTime(start, seps[0], line, year, false);
 	if (error != 0)
 		return (error);
-	error = parseTime(start, '-', line, month, false);
+	error = parseTime(start, seps[1], line, month, false);
 	if (error != 0)
 		return (error);
-	error = parseTime(start, ',', line, day, false);
+	error = parseTime(start, seps[2], line, day, true);
 	if (error != 0)
 		return (error);
-	error = parseValue(start, line, value);
+	error = parseValue(start, line, num);
 	if (error != 0)
 		return (error);
-
-	this->lst[Entry(year, month, day)] = value;
-	return (0);
-}
-
-int BitcoinExchange::parseDatabase(const char *name)
-{
-	std::ifstream in;
-	std::string line;
-	int error;
-	char full_path[PATH_MAX];
-	realpath(name, full_path);
-	in.open(full_path);
-	std::cout << "Path: " << full_path << std::endl;
-
-	if (!in.good())
-		return (ERR_PARSE_OPEN);
-	
-	// Skip Header
-	getline(in, line);
-	if (line != "date,exchange_rate")
-		return (ERR_PARSE_MISSING_HEAD);
-
-	// Read lines
-	while (getline(in, line))
-	{
-		error = parseDatabaseLine(line);
-		// Error in parsing -> identify
-		if (error)
-		{
-			switch (error)
-			{
-				case ERR_PARSE_OPEN:			std::cout << "Error: Database " << name << "could not be opened" << std::endl;			return (error);
-				case ERR_PARSE_MISSING_HEAD:	std::cout << "Error: Database " << name << "is missing the Header line" << std::endl;	return (error);
-				case ERR_PARSE_MISSING_SEP:		std::cout << "Error: Database entry is missing sepereator" << std::endl;				return (error);
-				case ERR_PARSE_INVAL_CHAR:		std::cout << "Error: Invalid character in database" << std::endl;						return (error);
-				case ERR_PARSE_GENERIC_SYNTAX:	std::cout << "Error: Unspecified Syntax error in database" << std::endl;				return (error);
-				default:						std::cout << "Error: Unknown Error code " << error << std::endl;						return (error);
-			}
-		}
-	}
-	return (0);
-}
-
-int BitcoinExchange::parseInputLine(const std::string &line)
-{
-	int			error;
-	int			year;
-	int			month;
-	int			day;
-	SmartNum	value;
-	SmartNum	course;
-	Entry		e;
-	std::string::size_type	start;
-
-	// Skip empty lines
-	if (line.empty())
-		return (true);
-
-	// First part is year
-	start = 0;
-
-	error = parseTime(start, '-', line, year, false);
-	if (error != 0)
-		return (error);
-
-	error = parseTime(start, '-', line, month, false);
-	if (error != 0)
-		return (error);
-
-	error = parseTime(start, '|', line, day, true);
-	if (error != 0)
-		return (error);
-
-	error = parseValue(start, line, value);
-	if (error != 0)
-		return (error);
-
-	// Get the current Entry and the corresponding course from database
 	e.set(year, month, day);
-	course = this->get(e);
-	std::cout << e << " => " << value << " => " << (course * value) << std::endl;
+	if (!e.valid())
+		return (ERR_PARSE_DATE_INVALID);
 	return (0);
 }
 
-int BitcoinExchange::parseInput(const char *name)
+void BitcoinExchange::parseContent(std::ifstream &in, FileType mode)
 {
-	std::ifstream in;
-	std::string line;
-	int error;
-	char full_path[PATH_MAX];
+	// Read lines
+	std::string		line;
+	std::string		filetype;
+	int				error;
+	Entry			e;
+	SmartNum		value;
+	SmartNum		course;
+
+	if (mode == DATABASE)
+		filetype = "database";
+	else
+		filetype = "input";
+
+	while (getline(in, line))
+	{
+		if (mode == DATABASE)
+		{
+			error = parseLine(line, "--,", e, value);
+			if (error)
+				BitcoinExchange::complain(error, filetype);
+			else
+				this->lst[e] = value;
+		}
+		else // if (mode == INPUT_FILE)
+		{
+			error = parseLine(line, "--|", e, value);
+			if (!error)
+				error = checkValue(value);
+			if (error)
+				BitcoinExchange::complain(error, filetype);
+			else
+			{
+				course = this->get(e);
+				std::cout << e << " => " << value << " => " << (course * value) << std::endl;
+			}
+		}
+	}
+}
+
+int BitcoinExchange::parseFile(const char *name, FileType mode)
+{
+	std::ifstream	in;
+	std::string		line;
+	std::string		filetype;
+	char			full_path[PATH_MAX];
+
+	if (mode == DATABASE)
+		filetype = "database";
+	else
+		filetype = "input";
+
 	realpath(name, full_path);
 	in.open(full_path);
 
 	if (!in.good())
+	{
+		BitcoinExchange::complain(ERR_PARSE_OPEN, filetype, full_path);
 		return (ERR_PARSE_OPEN);
+	}
 	
 	// Skip Header
 	getline(in, line);
-	if (line != "date | value")
-		return (ERR_PARSE_MISSING_HEAD);
-
-	// Read lines
-	while (getline(in, line))
+	if ((mode == DATABASE && line != "date,exchange_rate") \
+		|| (mode == INPUT_FILE && line != "date | value"))
 	{
-		error = parseInputLine(line);
-		// Error in parsing -> identify
-		if (error)
-		{
-			switch (error)
-			{
-				case ERR_PARSE_OPEN:			std::cout << "Error: Input file " << name << "could not be opened" << std::endl;		break ;
-				case ERR_PARSE_MISSING_HEAD:	std::cout << "Error: Input file " << name << "is missing the Header line" << std::endl;	break ;
-				case ERR_PARSE_MISSING_SEP:		std::cout << "Error: Input file entry is missing sepereator" << std::endl;				break ;
-				case ERR_PARSE_INVAL_CHAR:		std::cout << "Error: Invalid character in input file" << std::endl;						break ;
-				case ERR_PARSE_GENERIC_SYNTAX:	std::cout << "Error: Unspecified Syntax error in input file" << std::endl;				break ;
-				default:						std::cout << "Error: Unknown Error code " << error << std::endl;						break ;
-			}
-		}
+		BitcoinExchange::complain(ERR_PARSE_MISSING_HEAD, filetype, full_path);
+		return (ERR_PARSE_MISSING_HEAD);
 	}
+
+	parseContent(in, mode);
 	return (0);
 }
 
 
-// Outputting (mostly debug, might be REDUNDANT): -----------------------------
+// Outputting : ---------------------------------------------------------------
 
 
 std::ostream &operator<<(std::ostream &out, const Entry &entry)
@@ -450,8 +481,9 @@ std::ostream &operator<<(std::ostream &out, const std::map<Entry, SmartNum> &map
 	return (out);
 }
 
-std::ostream &operator<<(std::ostream &out, const BitcoinExchange &btc)
-{
-	out << btc.lst;
-	return (out);
-}
+// To use this, make BitcoinExchange->lst public
+// std::ostream &operator<<(std::ostream &out, const BitcoinExchange &btc)
+// {
+// 	out << btc.lst;
+// 	return (out);
+// }

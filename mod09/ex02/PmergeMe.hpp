@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:38:48 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 18:15:47 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 19:25:59 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ class VectorSort
 		static std::vector<int> readjust_list(std::vector<int> &list, std::vector<int> &sort);
 
 	public:
+
+		VectorSort(void);
+		VectorSort(const VectorSort &other);
+		~VectorSort(void);
+		VectorSort &operator=(const VectorSort &other);
+
 		/**
 		 * @brief Merge-Insertion-Sort Algorithm using vectors
 		 */
@@ -139,6 +145,12 @@ class ListSort
 		static std::list<int> readjust_list(std::list<int> &list, std::list<int> &sort);
 
 	public:
+
+		ListSort(void);
+		ListSort(const ListSort &other);
+		~ListSort(void);
+		ListSort &operator=(const ListSort &other);
+
 		/**
 		 * @brief Merge-Insertion-Sort Algorithm using double linked lists
 		 */

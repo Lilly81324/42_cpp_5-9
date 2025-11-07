@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:39:55 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 18:06:48 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 19:19:42 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,15 @@ int parseValue(std::string::size_type &start, const std::string &line, SmartNum 
 Entry::Entry(void): y(0), m(0), d(0)
 { }
 
+Entry::Entry(const Entry &other): y(0), m(0), d(0)
+{
+	*this = other;
+}
+
 Entry::Entry(int y, int m, int d): y(y), m(m), d(d)
+{ }
+
+Entry::~Entry()
 { }
 
 void Entry::set(int year, int month, int day)
@@ -156,6 +164,16 @@ bool Entry::valid(void)
 	if (this->d < 1 || this->d > 31)
 		return (false);
 	return (true);
+}
+
+Entry &Entry::operator=(const Entry &other)
+{
+	if (this == &other)
+		return (*this);
+	this->y = other.y;
+	this->m = other.m;
+	this->d = other.d;
+	return (*this);
 }
 
 bool Entry::operator<(const Entry &e) const
@@ -231,6 +249,14 @@ SmartNum::SmartNum(int i): usesInt(true), ival(i), dval(0.0)
 SmartNum::SmartNum(double d): usesInt(false), ival(0), dval(d)
 { }
 
+SmartNum::SmartNum(const SmartNum &other): usesInt(true), ival(0), dval(0.0)
+{
+	*this = other;
+}
+
+SmartNum::~SmartNum(void)
+{ }
+
 SmartNum &SmartNum::operator=(const int &num)
 {
 	this->usesInt = true;
@@ -284,6 +310,18 @@ SmartNum SmartNum::operator*(const SmartNum &b)
 
 
 // BitcoinExchange Class functions: -------------------------------------------
+
+
+BitcoinExchange::BitcoinExchange(void)
+{ }
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
+{
+	*this = other;
+}
+
+BitcoinExchange::~BitcoinExchange(void)
+{ }
 
 
 void BitcoinExchange::complain(int error, std::string filetype = "", std::string name = "")
@@ -445,6 +483,16 @@ int BitcoinExchange::parseFile(const char *name, FileType mode)
 	return (0);
 }
 
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
+{
+	if (this == &other)
+		return (*this);
+	std::map<Entry, SmartNum>::const_iterator it = other.lst.begin();
+	std::map<Entry, SmartNum>::const_iterator end = other.lst.end();
+	for (; it != end; it++)
+		this->lst.insert(*it);
+	return (*this);
+}
 
 // Outputting : ---------------------------------------------------------------
 

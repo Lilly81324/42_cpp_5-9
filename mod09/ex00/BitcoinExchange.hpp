@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:15:21 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 18:15:21 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 19:03:37 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,15 @@ class Entry
 	// Functions:
 	public:
 		Entry();
+		Entry(const Entry &e);
 		Entry(int y, int m, int d);
+		~Entry();
 		
 		void set(int year, int month, int day);
 		bool valid(void);
 	
 		// Required for use in map, so it satisfies "Compare"
+		Entry &operator=(const Entry &e);
 		bool operator<(const Entry &e) const;
 		bool operator<=(const Entry &e) const;
 		bool operator>=(const Entry &e) const;
@@ -107,6 +110,8 @@ class SmartNum
 		SmartNum(void);
 		SmartNum(int i);
 		SmartNum(double d);
+		SmartNum(const SmartNum &other);
+		~SmartNum(void);
 
 		SmartNum &operator=(const int &num);
 		SmartNum &operator=(const double &num);
@@ -138,6 +143,11 @@ class BitcoinExchange
 
 	// Functions:
 	public:
+
+		BitcoinExchange(void);
+		BitcoinExchange(const BitcoinExchange &other);
+		~BitcoinExchange(void);
+
 		/**
 		 * @brief Complain according to the given error code
 		 * @param error Specifies the type of message
@@ -159,6 +169,9 @@ class BitcoinExchange
 		 */
 		int parseFile(const char *name, FileType mode);
 	
+		// this is dumb and does nothing
+		BitcoinExchange &operator=(const BitcoinExchange &other);
+
 	private:
 		/**
 		 * @brief Takes a line of content and turns it into Entry and Value

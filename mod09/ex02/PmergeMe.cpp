@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:38:11 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 18:15:40 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 19:25:35 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,44 @@ void	ft_swap(int &pos1, int &pos2)
 	temp = pos1;
 	pos1 = pos2;
 	pos2 = temp;
+}
+
+VectorSort::VectorSort(void)
+{ }
+
+VectorSort::VectorSort(const VectorSort &other)
+{
+	*this = other;
+}
+
+VectorSort::~VectorSort(void)
+{ }
+
+VectorSort &VectorSort::operator=(const VectorSort &other)
+{
+	if (this == &other)
+		return (*this);
+	// no members to copy
+	return (*this);
+}
+
+ListSort::ListSort(void)
+{ }
+
+ListSort::ListSort(const ListSort &other)
+{
+	*this = other;
+}
+
+ListSort::~ListSort(void)
+{ }
+
+ListSort &ListSort::operator=(const ListSort &other)
+{
+	if (this == &other)
+		return (*this);
+	// no members to copy
+	return (*this);
 }
 
 void VectorSort::push_before(int pos, int to, std::vector<int> &list)

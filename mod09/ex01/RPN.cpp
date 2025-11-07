@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 14:29:29 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 18:15:30 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 19:30:18 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@ bool find(char c, const std::string &str)
 			return (true);
 	return (false);
 }
+
+Rpn::Rpn(void): stack()
+{ }
+
+Rpn::Rpn(const Rpn &other): stack()
+{
+	*this = other;
+}
+
+Rpn::~Rpn(void)
+{ }
 
 void Rpn::clear(void)
 {
@@ -73,6 +84,14 @@ int Rpn::getResult(std::string &error)
 	return (this->stack.top());
 }
 
+Rpn &Rpn::operator=(const Rpn &other)
+{
+	if (this == &other)
+		return (*this);
+	this->stack = other.stack;
+	return (*this);
+}
+
 RpnCaller::RpnCaller(void)
 {
 	this->curNum = -1;
@@ -80,6 +99,14 @@ RpnCaller::RpnCaller(void)
 	this->lastOperator = 0;
 	this->error = "";
 }
+
+RpnCaller::RpnCaller(const RpnCaller &other)
+{
+	*this = other;
+}
+
+RpnCaller::~RpnCaller(void)
+{ }
 
 void RpnCaller::clear()
 {
@@ -207,4 +234,16 @@ int RpnCaller::handle(const char *input)
 const std::string RpnCaller::getError(void)
 {
 	return (this->error);
+}
+
+RpnCaller &RpnCaller::operator=(const RpnCaller &other)
+{
+	if (this == &other)
+		return (*this);
+	this->rpn = other.rpn;
+	this->curNum = other.curNum;
+	this->hasNum = other.hasNum;
+	this->lastOperator = other.lastOperator;
+	this->error = other.error;
+	return (*this);
 }

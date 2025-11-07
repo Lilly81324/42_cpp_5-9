@@ -1,27 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/07 18:15:26 by sikunne           #+#    #+#             */
+/*   Updated: 2025/11/07 18:15:27 by sikunne          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "RPN.hpp"
 
-// Load given Argument into function
-// Calculate result
-// Return result or Error
-// Stop
-
-// Available:
-// deque
-// map
-// multiset
-// multimap
-// stack
-// queue
-// priority_queue
-
 // Good Containers:
-// stack of deque
-// Need to push to top, access top, pop top
+// deque	O(1) Insertion/Deletion at end
 
-// read characters until space or end
-// number -> push
-// operator -> top, top, pop, pop, push
-// return top element of stack
+// Used Containers:
+// std::stack, std::deque
 
 int main(int argc, char **argv)
 {

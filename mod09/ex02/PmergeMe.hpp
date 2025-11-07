@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:38:48 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/06 14:14:32 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/07 18:15:47 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 #include <vector>
 #include <list>
 #include <set>
-#include <utility> // for pairs
 
 void	ft_swap(int &pos1, int &pos2);
 

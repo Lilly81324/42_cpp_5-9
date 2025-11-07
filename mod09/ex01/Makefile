@@ -2,7 +2,7 @@ NAME = RPN
 TARGET = "3 4 +"
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 OBJ_DIR = ./obj/
 
 SRC = RPN.cpp main.cpp

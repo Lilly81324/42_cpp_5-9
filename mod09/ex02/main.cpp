@@ -1,6 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/07 18:15:35 by sikunne           #+#    #+#             */
+/*   Updated: 2025/11/07 18:15:36 by sikunne          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
 
-// Uses vector, list, set
+// Good Containers:
+// vector	Great for binary insertion, due to random acces with subscript operator
+// list		Insertion and Deletion of numbers in the middle without reallocation
+
+// Used Containers:
+// std::vector, std::list, std::set
 
 void print_duration(const timeval &past, const timeval &present)
 {

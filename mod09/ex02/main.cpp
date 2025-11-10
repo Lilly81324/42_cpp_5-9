@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:15:35 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 18:15:36 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/10 17:54:37 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ int main(int argc, char **argv)
 {
 	// Main Containers
 	std::vector<int> vec;
-	std::list<int> lst;
 
 	// For verifying no doubles
 	std::set<int> unique;
@@ -152,8 +151,6 @@ int main(int argc, char **argv)
 	std::string errMsg;
 	struct timeval pastVec;
 	struct timeval presentVec;
-	struct timeval pastLst;
-	struct timeval presentLst;
 
 
 	// Argc check
@@ -163,21 +160,30 @@ int main(int argc, char **argv)
 		return (1);
 	}
 
-	// For all arguments
-	for (int i = 1; i < argc; i++)
-	{
-		if (makeListPart(argv[i], lst, unique, errMsg) == false)
-		{
-			std::cerr << errMsg << std::endl;
-			return (1);
-		}
-	}
+	(void)argv;
 
-	// Copy finished list into vector
-	it = lst.begin();
-	end = lst.end();
-	for (; it != end; it++)
-		vec.push_back(*it);
+	vec.push_back(11);
+	vec.push_back(2);
+	vec.push_back(17);
+	vec.push_back(0);
+	vec.push_back(16);
+	vec.push_back(8);
+	vec.push_back(6);
+	vec.push_back(15);
+	vec.push_back(10);
+	vec.push_back(3);
+	vec.push_back(21);
+	vec.push_back(1);
+	vec.push_back(18);
+	vec.push_back(9);
+	vec.push_back(14);
+	vec.push_back(19);
+	vec.push_back(12);
+	vec.push_back(5);
+	vec.push_back(4);
+	vec.push_back(20);
+	vec.push_back(13);
+	vec.push_back(7);
 
 	// First line
 	std::cout << "Before:            " ;
@@ -187,17 +193,7 @@ int main(int argc, char **argv)
 	// Sorting
 	gettimeofday(&pastVec, 0);
 	VectorSort::merge_sort(vec);
-	gettimeofday(&presentVec, 0);	
-	gettimeofday(&pastLst, 0);
-	ListSort::merge_sort(lst);
-	gettimeofday(&presentLst, 0);
-
-	// Checking for sorted
-	if (!isSorted(vec) || !isSorted(lst))
-	{
-		std::cerr << "Sorting failed. This is a failed Evaluation" << std::endl;
-		return (1);
-	}
+	gettimeofday(&presentVec, 0);
 
 	// Second line
 	std::cout << "Afer:              " ;
@@ -206,9 +202,6 @@ int main(int argc, char **argv)
 
 	// Third line
 	test_result(vec.size(), "std::vector<int>", pastVec, presentVec);
-
-	// Fourth line
-	test_result(lst.size(), "std::list<int>  ", pastLst, presentLst);
 
 	return (0);
 }

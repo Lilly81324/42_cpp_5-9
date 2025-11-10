@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 17:39:55 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/07 19:19:42 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:25:06 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -511,7 +511,7 @@ std::ostream &operator<<(std::ostream &out, const SmartNum &num)
 	if (num.usesInt)
 		out << num.ival;
 	else
-		out << num.dval;
+		out << std::fixed << std::setprecision(2) << num.dval;
 	return (out);
 }
 

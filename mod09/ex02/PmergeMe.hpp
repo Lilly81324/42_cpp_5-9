@@ -6,7 +6,7 @@
 /*   By: sikunne <sikunne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:38:48 by sikunne           #+#    #+#             */
-/*   Updated: 2025/11/10 18:41:32 by sikunne          ###   ########.fr       */
+/*   Updated: 2025/11/11 14:29:49 by sikunne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,66 @@
 #include <set>
 #include <utility>
 
-template<typename T>
+// template<typename T>
+// class CPair
+// {
+// 	public:
+// 		T first;
+// 		T second;
+
+// 		CPair(T &a, T &b): first(a), second(b)
+// 		{
+// 			if (a > b)
+// 			{
+// 				first = b;
+// 				second = a;
+// 			}
+// 		}
+
+// 		bool operator<(const CPair &other)
+// 		{
+// 			return (this->second < other.second);
+// 		}
+
+// 		bool operator>(const CPair &other)
+// 		{
+// 			return (this->second > other.second);
+// 		}
+// };
+#include <math.h>
 class CPair
 {
 	public:
-		T first;
-		T second;
+		int depth;
+		int* a1;
+		int* a2;
+		int* b1;
+		int* b2;
 
-		CPair(T &a, T &b): first(a), second(b)
+
+		CPair(int *first, int *second, int depth): depth(depth)
 		{
-			if (a > b)
+			a1 = first - ((int)pow(2, depth) - 1);
+			a2 = first;
+			b1 = second - ((int)pow(2, depth) - 1);
+			b2 = second;
+			if (*a2 > *b2)
 			{
-				first = b;
-				second = a;
+				a1 = b1;
+				a2 = b2;
+				b1 = first - ((int)pow(2, depth) - 1);
+				b2 = first;
 			}
 		}
 
 		bool operator<(const CPair &other)
 		{
-			return (this->second < other.second);
+			return (*(this->b2) < *(other.b2));
 		}
 
 		bool operator>(const CPair &other)
 		{
-			return (this->second > other.second);
+			return (*(this->b2) > *(other.b2));
 		}
 };
 
